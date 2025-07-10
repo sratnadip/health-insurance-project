@@ -35,9 +35,6 @@ public class User {
     @JsonBackReference
     private UserProfile userProfile;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Policy> policies = new ArrayList<>() ;
 
 
     public User(Long userId, String userName, String email, String password, String role) {
@@ -52,13 +49,7 @@ public class User {
     public User() {
     }
 
-    public List<Policy> getPolicies() {
-        return policies;
-    }
 
-    public void setPolicies(List<Policy> policies) {
-        this.policies = policies;
-    }
 
     public Long getUserId() {
         return userId;
