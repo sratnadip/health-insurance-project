@@ -1,13 +1,8 @@
 package com.crud.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-
-
+import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Table(name = "user_profiles")
@@ -23,188 +18,103 @@ public class UserProfile {
     private String email;
 
     private String password;
-
     private String phone;
-
     private String address;
-
-//    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dob;
-
     private String gender;
-
     private String maritalStatus;
-
     private String occupation;
-
     private String nomineeName;
-
     private String nomineeRelation;
-
     private String bloodGroup;
-
     private String emergencyContact;
-
     private String policy;
-
     private String policyType;
-
     private String aadhaarNumber;
 
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "userId")
     @JsonManagedReference
     private User user;
 
+    @OneToOne(mappedBy = "userProfile", cascade = CascadeType.ALL)
+    private Doctor doctor;
+
     // Getters and Setters
 
+    public Long getId() { return id; }
 
-    public User getUser() {
-        return user;
-    }
+    public void setId(Long id) { this.id = id; }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+    public String getName() { return name; }
 
-    public Long getId() {
-        return id;
-    }
+    public void setName(String name) { this.name = name; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getEmail() { return email; }
 
-    public String getName() {
-        return name;
-    }
+    public void setEmail(String email) { this.email = email; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public String getPassword() { return password; }
 
-    public String getEmail() {
-        return email;
-    }
+    public void setPassword(String password) { this.password = password; }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public String getPhone() { return phone; }
 
-    public String getPassword() {
-        return password;
-    }
+    public void setPhone(String phone) { this.phone = phone; }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public String getAddress() { return address; }
 
-    public String getPhone() {
-        return phone;
-    }
+    public void setAddress(String address) { this.address = address; }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+    public LocalDate getDob() { return dob; }
 
-    public String getAddress() {
-        return address;
-    }
+    public void setDob(LocalDate dob) { this.dob = dob; }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+    public String getGender() { return gender; }
 
-    public LocalDate getDob() {
-        return dob;
-    }
+    public void setGender(String gender) { this.gender = gender; }
 
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
-    }
+    public String getMaritalStatus() { return maritalStatus; }
 
-    public String getGender() {
-        return gender;
-    }
+    public void setMaritalStatus(String maritalStatus) { this.maritalStatus = maritalStatus; }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
+    public String getOccupation() { return occupation; }
 
-    public String getMaritalStatus() {
-        return maritalStatus;
-    }
+    public void setOccupation(String occupation) { this.occupation = occupation; }
 
-    public void setMaritalStatus(String maritalStatus) {
-        this.maritalStatus = maritalStatus;
-    }
+    public String getNomineeName() { return nomineeName; }
 
-    public String getOccupation() {
-        return occupation;
-    }
+    public void setNomineeName(String nomineeName) { this.nomineeName = nomineeName; }
 
-    public void setOccupation(String occupation) {
-        this.occupation = occupation;
-    }
+    public String getNomineeRelation() { return nomineeRelation; }
 
-    public String getNomineeName() {
-        return nomineeName;
-    }
+    public void setNomineeRelation(String nomineeRelation) { this.nomineeRelation = nomineeRelation; }
 
-    public void setNomineeName(String nomineeName) {
-        this.nomineeName = nomineeName;
-    }
+    public String getBloodGroup() { return bloodGroup; }
 
-    public String getNomineeRelation() {
-        return nomineeRelation;
-    }
+    public void setBloodGroup(String bloodGroup) { this.bloodGroup = bloodGroup; }
 
-    public void setNomineeRelation(String nomineeRelation) {
-        this.nomineeRelation = nomineeRelation;
-    }
+    public String getEmergencyContact() { return emergencyContact; }
 
-    public String getBloodGroup() {
-        return bloodGroup;
-    }
+    public void setEmergencyContact(String emergencyContact) { this.emergencyContact = emergencyContact; }
 
-    public void setBloodGroup(String bloodGroup) {
-        this.bloodGroup = bloodGroup;
-    }
+    public String getPolicy() { return policy; }
 
-    public String getEmergencyContact() {
-        return emergencyContact;
-    }
+    public void setPolicy(String policy) { this.policy = policy; }
 
-    public void setEmergencyContact(String emergencyContact) {
-        this.emergencyContact = emergencyContact;
-    }
+    public String getPolicyType() { return policyType; }
 
-    public String getPolicy() {
-        return policy;
-    }
+    public void setPolicyType(String policyType) { this.policyType = policyType; }
 
-    public void setPolicy(String policy) {
-        this.policy = policy;
-    }
+    public String getAadhaarNumber() { return aadhaarNumber; }
 
-    public String getPolicyType() {
-        return policyType;
-    }
+    public void setAadhaarNumber(String aadhaarNumber) { this.aadhaarNumber = aadhaarNumber; }
 
-    public void setPolicyType(String policyType) {
-        this.policyType = policyType;
-    }
+    public User getUser() { return user; }
 
-    public String getAadhaarNumber() {
-        return aadhaarNumber;
-    }
+    public void setUser(User user) { this.user = user; }
 
-    public void setAadhaarNumber(String aadhaarNumber) {
-        this.aadhaarNumber = aadhaarNumber;
-    }
+    public Doctor getDoctor() { return doctor; }
 
-
-//    @OneToMany(mappedBy = "userProfile", cascade = CascadeType.ALL)
-//    private List<Policy> policies;
-
+    public void setDoctor(Doctor doctor) { this.doctor = doctor; }
 }

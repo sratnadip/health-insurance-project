@@ -22,8 +22,8 @@ public class UserImpl implements UserService {
     }
 
     @Override
-    public User getUserById(Long id) {
-        return repository.findById(id).get();
+    public User getUserById(Long userId) {
+        return repository.findById(userId).get();
 
     }
 
@@ -34,8 +34,8 @@ public class UserImpl implements UserService {
     }
 
     @Override
-    public User updateUser(Long id, User user) {
-        Optional<User> users = repository.findById(id);
+    public User updateUser(Long userId, User user) {
+        Optional<User> users = repository.findById(userId);
         if (users.isPresent()) {
             User user1 = users.get();
             user1.setUserName(user.getUserName());
@@ -50,10 +50,10 @@ public class UserImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(Long id) {
-        Optional<User> users = repository.findById(id);
+    public void deleteUser(Long userId) {
+        Optional<User> users = repository.findById(userId);
         if (users.isPresent()) {
-            repository.deleteById(id);
+            repository.deleteById(userId);
         }
     }
 

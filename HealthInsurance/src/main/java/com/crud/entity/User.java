@@ -10,7 +10,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userId;
     private String userName;
 
     private String email;
@@ -31,8 +31,8 @@ public class User {
     @JsonBackReference
     private UserProfile userProfile;
 
-    public User(Long id, String userName, String email, String password, String role) {
-        this.id = id;
+    public User(Long userId, String userName, String email, String password, String role) {
+        this.userId = userId;
         this.userName = userName;
         this.email = email;
 
@@ -44,11 +44,11 @@ public class User {
     }
 
     public Long getId() {
-        return id;
+        return userId;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.userId = userId;
     }
 
     public String getUserName() {

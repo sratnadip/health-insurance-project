@@ -9,13 +9,13 @@ public interface UserService {
 
     public User createUser(User user);
 
-    public User getUserById(Long id);
+    public User getUserById(Long userId);
 
     public List<User> getAllUsers();
 
-    public User updateUser(Long id, User register);
+    public User updateUser(Long userId, User register);
 
-    public void deleteUser(Long id);
+    public void deleteUser(Long userId);
 
     // for login
     User loginUser(String email, String password);

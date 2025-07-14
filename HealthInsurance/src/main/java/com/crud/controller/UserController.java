@@ -29,20 +29,20 @@ public class UserController {
 
     }
 
-   @GetMapping("{id}")
+   @GetMapping("{userId}")
     public User getUserById(@PathVariable Long id){
         return service.getUserById(id);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/update/{userId}")
     public User updateUser(@PathVariable Long id, @RequestBody User user){
         return service.updateUser(id,user);
 
     }
 
-    @DeleteMapping("delete/{id}")
-    public String deleteUser(@PathVariable Long id){
-        service.deleteUser(id);
+    @DeleteMapping("delete/{userId}")
+    public String deleteUser(@PathVariable Long userId){
+        service.deleteUser(userId);
         return "user deleted successfully";
 
     }
