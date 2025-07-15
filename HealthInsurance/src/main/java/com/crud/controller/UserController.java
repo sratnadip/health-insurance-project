@@ -53,7 +53,7 @@ public class UserController {
 
         if (user != null) {
             // Return only selected fields
-            LoginDto responseDto = new LoginDto(user.getId(),
+            LoginDto responseDto = new LoginDto(user.getUserId(),
                     user.getEmail(),user.getPassword(),user.getRole());
             return ResponseEntity.ok(responseDto);
         } else
