@@ -37,8 +37,8 @@ public class UserProfile {
     @JsonManagedReference
     private User user;
 
-    @OneToOne(mappedBy = "userProfile", cascade = CascadeType.ALL)
-    private Doctor doctor;
+//    @OneToOne(mappedBy = "userProfile", cascade = CascadeType.ALL)
+//    private Doctor doctor;
 
     // Getters and Setters
 
@@ -114,7 +114,7 @@ public class UserProfile {
 
     public void setUser(User user) { this.user = user; }
 
-    public Doctor getDoctor() { return doctor; }
-
-    public void setDoctor(Doctor doctor) { this.doctor = doctor; }
+//    public Doctor getDoctor() { return doctor; }
+//
+//    public void setDoctor(Doctor doctor) { this.doctor = doctor; }
 }

@@ -15,10 +15,6 @@ public class Doctor {
     private String status;
     private String location;
 
-    @OneToOne
-    @JoinColumn(name = "user_profile_id")  // foreign key in doctor table
-    private UserProfile userProfile;
-
     public Doctor() {}
 
     public Doctor(String specialization) {
@@ -46,7 +42,6 @@ public class Doctor {
 
     public void setLocation(String location) { this.location = location; }
 
-    public UserProfile getUserProfile() { return userProfile; }
 
-    public void setUserProfile(UserProfile userProfile) { this.userProfile = userProfile; }
+
 }

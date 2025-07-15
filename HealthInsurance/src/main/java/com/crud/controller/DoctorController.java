@@ -28,6 +28,11 @@ public class DoctorController {
         }
     }
 
+    // DoctorController.java
+    @GetMapping("/all")
+    public List<Doctor> getAllDoctors() {
+        return doctorService.getAllDoctors();
+    }
 
 
     @GetMapping("/{id}")
@@ -35,10 +40,10 @@ public class DoctorController {
         return doctorService.getDoctorById(id);
     }
 
-    @GetMapping
-    public List<Doctor> getAllDoctors() {
-        return doctorService.getAllDoctors();
-    }
+//    @GetMapping
+//    public List<Doctor> getAllDoctors() {
+//        return doctorService.getAllDoctors();
+//    }
 
     @PutMapping("/{id}")
     public Doctor updateDoctor(@PathVariable Long id, @RequestBody Doctor doctor) {
