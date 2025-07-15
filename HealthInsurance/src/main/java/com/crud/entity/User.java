@@ -15,40 +15,37 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+
     private String userName;
-
     private String email;
-
     private String password;
-
     private String role;
 
-    public UserProfile getUserProfile() {
-        return userProfile;
-    }
-
-    public void setUserProfile(UserProfile userProfile) {
-        this.userProfile = userProfile;
-    }
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Document> documents = new ArrayList<>();
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonBackReference
     private UserProfile userProfile;
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
 
+    public User() {}
 
     public User(Long userId, String userName, String email, String password, String role) {
         this.userId = userId;
         this.userName = userName;
         this.email = email;
-
         this.password = password;
         this.role = role;
     }
 
-    public User() {
-    }
-
-
+// Getters and Setters
 
     public Long getUserId() {
         return userId;
@@ -74,7 +71,6 @@ public class User {
         this.email = email;
     }
 
-
     public String getPassword() {
         return password;
     }
@@ -83,10 +79,19 @@ public class User {
         this.password = password;
     }
 
-    public String getRole(){
+    public String getRole() {
         return role;
     }
-    public void setRole(String role){
+
+    public void setRole(String role) {
         this.role = role;
+    }
+
+    public List<Document> getDocuments() {
+        return documents;
+    }
+
+    public void setDocuments(List<Document> documents) {
+        this.documents = documents;
     }
 }
