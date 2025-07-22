@@ -1,6 +1,7 @@
 package com.crud.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Entity
 public class User {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,11 +25,13 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<Document> documents = new ArrayList<>();
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonBackReference
     private UserProfile userProfile;
+
     public UserProfile getUserProfile() {
         return userProfile;
     }
@@ -45,7 +49,7 @@ public class User {
         this.role = role;
     }
 
-// Getters and Setters
+
 
     public Long getUserId() {
         return userId;

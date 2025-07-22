@@ -9,12 +9,11 @@ import java.time.LocalDate;
 @Builder
 public class UserPolicy {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId; // or map to User entity
+    private Long userId;
 
     @ManyToOne
     @JoinColumn(name = "policy_plan_id")

@@ -17,11 +17,13 @@ public class PolicyPlanImpl implements PolicyPlanservice {
 
     @Override
     public PolicyPlan createPlan(PolicyPlan plan) {
+
         return repository.save(plan);
     }
 
     @Override
     public List<PolicyPlan> getAllPlans() {
+
         return repository.findAll();
     }
 }

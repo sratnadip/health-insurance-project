@@ -32,7 +32,6 @@ public class Document {
     }
 
 
-
     public Long getClaimDocumentId() {
         return claimDocumentId;
     }
