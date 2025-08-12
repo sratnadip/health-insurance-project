@@ -4,6 +4,7 @@ import com.crud.entity.User;
 import com.crud.repository.UserRepository;
 import com.crud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +16,12 @@ public class UserImpl implements UserService {
     @Autowired
     private UserRepository repository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public User createUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return repository.save(user);
     }
@@ -41,7 +46,7 @@ public class UserImpl implements UserService {
             user1.setUserName(user.getUserName());
             user1.setEmail(user.getEmail());
             user1.setPassword(user.getPassword());
-            user1.setRole(user.getRole());
+
             return repository.save(user1);
         } else {
             return null;
@@ -57,15 +62,14 @@ public class UserImpl implements UserService {
         }
     }
 
-    @Override
-    public User loginUser(String email, String password) {
-        Optional<User> user = repository.findByEmailAndPassword(email, password);
-        if (user.isPresent()) {
-            return user.get();
-        } else {
-            return null;
-        }
+//    @Override
+//    public User loginUser(String email, String password) {
+//        Optional<User> user = repository.findByEmailAndPassword(email, password);
+//        if (user.isPresent()) {
+//            return user.get();
+//        } else {
+//            return null;
+//        }
 
 
-    }
 }

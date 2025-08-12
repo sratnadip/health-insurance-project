@@ -103,4 +103,6 @@ public class UserPolicy {
     public void setNomineeRelation(String nomineeRelation) {
         this.nomineeRelation = nomineeRelation;
     }
+
+
 }

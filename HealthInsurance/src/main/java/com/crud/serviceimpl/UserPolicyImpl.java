@@ -2,10 +2,12 @@ package com.crud.serviceimpl;
 
 import com.crud.dto.PurchaseRequest;
 import com.crud.entity.PolicyPlan;
+import com.crud.entity.User;
 import com.crud.entity.UserPolicy;
 import com.crud.repository.PolicyRepository;
 import com.crud.repository.UserPolicyRepository;
 import com.crud.service.UserPolicyService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +39,10 @@ public class UserPolicyImpl implements UserPolicyService {
                 .nomineeRelation(request.getNomineeRelation())
                 .build();
 
-        return userPolicyRepository.save(userPolicy);
+              return userPolicyRepository.save(userPolicy);
+
+
+
     }
 
     @Override

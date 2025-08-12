@@ -46,21 +46,22 @@ public class UserController {
         return "user deleted successfully";
 
     }
-
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
-       User user = service.loginUser(loginDto.getEmail(), loginDto.getPassword());
-
-        if (user != null) {
-            // Return only selected fields
-            LoginDto responseDto = new LoginDto(user.getUserId(),
-                    user.getEmail(),user.getPassword(),user.getRole());
-            return ResponseEntity.ok(responseDto);
-        } else
-            {    return ResponseEntity.status(401).body("Invalid credentials");}
-
-
-}}
+//
+//    @PostMapping("/login")
+//    public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
+//       User user = service.loginUser(loginDto.getEmail(), loginDto.getPassword());
+//
+//        if (user != null) {
+//            // Return only selected fields
+//            LoginDto responseDto = new LoginDto(user.getUserId(),
+//                    user.getEmail(),user.getPassword(),user.getRole());
+//            return ResponseEntity.ok(responseDto);
+//        } else
+//            {    return ResponseEntity.status(401).body("Invalid credentials");}
+//
+//
+//}
+}
 
 
 
