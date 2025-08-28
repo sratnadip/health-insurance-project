@@ -18,14 +18,11 @@ public class DocumentController {
     @PostMapping("/upload")
     public ResponseEntity<?> uploadDocument(
             @RequestParam("file") MultipartFile file,
-            @RequestParam("claimId") Long claimId,
             @RequestParam("userId") Long userId,
-            @RequestParam("documentName") String documentName,
-            @RequestParam("documentType") String documentType,
-            @RequestParam("documentStatus") String documentStatus
+            @RequestParam("documentName") String documentName
     ) {
         try {
-            Document saved = documentService.storeFile(file, claimId, userId, documentName, documentType, documentStatus);
+            Document saved = documentService.storeFile(file, userId, documentName);
             return new ResponseEntity<>(saved, HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();

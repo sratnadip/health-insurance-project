@@ -56,6 +56,7 @@ public class SecurityConfig {
                             "/api/v1/save",
                             "/api/auth/verify-otp",
                             "/api/auth/login",
+                            "/api/documents/upload",
 
                             "/api/admin/register",
                             "/api/admin/login",

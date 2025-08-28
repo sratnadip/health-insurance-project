@@ -1,22 +1,18 @@
 package com.crud.entity;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "document")
 public class Document {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long claimDocumentId;
 
-    private Long claimId;
-
     private String documentName;
-
-    private String documentType;
-
-    @Column(name = "document_status")
-    private String documentStatus; // "pending" or "uploaded"
 
     private LocalDateTime uploadedAt;
 
@@ -28,9 +24,7 @@ public class Document {
     @JsonBackReference
     private User user;
 
-    public Document() {
-    }
-
+    public Document() {}
 
     public Long getClaimDocumentId() {
         return claimDocumentId;
@@ -40,36 +34,12 @@ public class Document {
         this.claimDocumentId = claimDocumentId;
     }
 
-    public Long getClaimId() {
-        return claimId;
-    }
-
-    public void setClaimId(Long claimId) {
-        this.claimId = claimId;
-    }
-
     public String getDocumentName() {
         return documentName;
     }
 
     public void setDocumentName(String documentName) {
         this.documentName = documentName;
-    }
-
-    public String getDocumentType() {
-        return documentType;
-    }
-
-    public void setDocumentType(String documentType) {
-        this.documentType = documentType;
-    }
-
-    public String getDocumentStatus() {
-        return documentStatus;
-    }
-
-    public void setDocumentStatus(String documentStatus) {
-        this.documentStatus = documentStatus;
     }
 
     public LocalDateTime getUploadedAt() {
