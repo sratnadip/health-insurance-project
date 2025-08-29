@@ -3,6 +3,7 @@ package com.crud.entity;
 import com.crud.enums.AdminStatus;
 import com.crud.enums.Role;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "admins")
@@ -16,18 +17,19 @@ public class Admin {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = true)
     private String gstNumber;
-
 
     @Enumerated(EnumType.STRING)
     private AdminStatus status = AdminStatus.PENDING;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String otp; // temporary OTP for login
 
     // Getters and Setters
@@ -43,13 +45,8 @@ public class Admin {
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
+    public Role getRole() { return role; }
+    public void setRole(Role role) { this.role = role; }
 
     public String getGstNumber() { return gstNumber; }
     public void setGstNumber(String gstNumber) { this.gstNumber = gstNumber; }

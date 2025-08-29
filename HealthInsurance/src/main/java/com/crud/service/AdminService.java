@@ -13,4 +13,5 @@ public interface AdminService {
     List<Admin> getAdminsByStatus(AdminStatus status);
     Admin updateStatus(Long adminId, AdminStatus status); // for approval/rejection
     Admin save(Admin admin);
+    Optional<Admin> findByGstNumber(String gstNumber);
 }

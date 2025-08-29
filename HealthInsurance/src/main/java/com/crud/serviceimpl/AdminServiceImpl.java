@@ -8,6 +8,7 @@ import com.crud.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,10 +22,16 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
-
     @Override
     public Admin registerAdmin(Admin admin) {
+        // basic uniqueness checks
+        if (adminRepository.findByEmail(admin.getEmail()).isPresent()) {
+            throw new RuntimeException("Email already registered");
+        }
+        if (admin.getGstNumber() != null && adminRepository.findByGstNumber(admin.getGstNumber()).isPresent()) {
+            throw new RuntimeException("GST number already registered");
+        }
+
         admin.setStatus(AdminStatus.PENDING);
         admin.setPassword(passwordEncoder.encode(admin.getPassword()));
         admin.setRole(Role.ADMIN);
@@ -47,6 +54,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional
     public Admin updateStatus(Long adminId, AdminStatus status) {
         Admin admin = adminRepository.findById(adminId)
                 .orElseThrow(() -> new RuntimeException("Admin not found"));
@@ -55,7 +63,12 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public Optional<Admin> findByGstNumber(String gstNumber) {
+        return adminRepository.findByGstNumber(gstNumber);
+    }
+
+    @Override
     public Admin save(Admin admin) {
-        return adminRepository.save(admin); // ✅ return entity back
+        return adminRepository.save(admin);
     }
 }

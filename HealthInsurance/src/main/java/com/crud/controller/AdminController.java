@@ -6,6 +6,7 @@ import com.crud.enums.AdminStatus;
 import com.crud.enums.Role;
 import com.crud.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -33,55 +34,40 @@ public class AdminController {
     // DTO for login
     public static class LoginRequest {
         private String email;
-        private String password;   // added password field
+        private String password;
 
-        public String getEmail() {
-            return email;
-        }
-        public void setEmail(String email) {
-            this.email = email;
-        }
+        public String getEmail() { return email; }
+        public void setEmail(String email) { this.email = email; }
 
-        public String getPassword() {
-            return password;
-        }
-        public void setPassword(String password) {
-            this.password = password;
-        }
+        public String getPassword() { return password; }
+        public void setPassword(String password) { this.password = password; }
     }
 
     // DTO for OTP verification
     public static class VerifyOtpRequest {
         private String email;
-        private String password;   // added password field
+        private String password;
         private String otp;
 
-        public String getEmail() {
-            return email;
-        }
-        public void setEmail(String email) {
-            this.email = email;
-        }
+        public String getEmail() { return email; }
+        public void setEmail(String email) { this.email = email; }
 
-        public String getPassword() {
-            return password;
-        }
-        public void setPassword(String password) {
-            this.password = password;
-        }
+        public String getPassword() { return password; }
+        public void setPassword(String password) { this.password = password; }
 
-        public String getOtp() {
-            return otp;
-        }
-        public void setOtp(String otp) {
-            this.otp = otp;
-        }
+        public String getOtp() { return otp; }
+        public void setOtp(String otp) { this.otp = otp; }
     }
 
     // Register
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Admin admin) {
-        return ResponseEntity.ok(adminService.registerAdmin(admin));
+        try {
+            Admin saved = adminService.registerAdmin(admin);
+            return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+        } catch (RuntimeException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        }
     }
 
     // Get all admins
@@ -108,25 +94,25 @@ public class AdminController {
         return ResponseEntity.ok(adminService.updateStatus(id, AdminStatus.REJECTED));
     }
 
-    // Login (send OTP) -> now requires email + password
+    // Login (send OTP) -> requires email + password
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         Optional<Admin> optionalAdmin = adminService.findByEmail(request.getEmail());
 
         if (optionalAdmin.isEmpty())
-            return ResponseEntity.badRequest().body("Admin not found");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Admin not found");
 
         Admin admin = optionalAdmin.get();
 
         if (admin.getStatus() != AdminStatus.APPROVED)
-            return ResponseEntity.badRequest().body("Admin not approved by SuperAdmin");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Admin not approved by SuperAdmin");
 
         // Check password
         if (!passwordEncoder.matches(request.getPassword(), admin.getPassword())) {
-            return ResponseEntity.badRequest().body("Invalid password");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
         }
 
-        //  If SUPER_ADMIN, skip OTP and return JWT directly
+        // If SUPER_ADMIN, skip OTP and return JWT directly
         if (admin.getRole() == Role.SUPER_ADMIN) {
             String token = jwtUtil.generateToken(admin.getEmail(), admin.getRole().name());
             return ResponseEntity.ok(Map.of(
@@ -135,8 +121,8 @@ public class AdminController {
             ));
         }
 
-        // Generate OTP
-        String otp = String.format("%06d", new Random().nextInt(999999));
+        // Generate OTP (6 digits)
+        String otp = String.format("%06d", new Random().nextInt(1_000_000));
         admin.setOtp(otp);
         adminService.save(admin);
 
@@ -150,31 +136,29 @@ public class AdminController {
         return ResponseEntity.ok("OTP sent to email");
     }
 
-    // Verify OTP + JWT Token -> now requires email + password + otp
+    // Verify OTP + JWT Token -> requires email + password + otp
     @PostMapping("/verify-otp")
     public ResponseEntity<?> verifyOtp(@RequestBody VerifyOtpRequest request) {
         Optional<Admin> optionalAdmin = adminService.findByEmail(request.getEmail());
 
         if (optionalAdmin.isEmpty())
-            return ResponseEntity.badRequest().body("Admin not found");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Admin not found");
 
         Admin admin = optionalAdmin.get();
 
         if (!passwordEncoder.matches(request.getPassword(), admin.getPassword())) {
-            return ResponseEntity.badRequest().body("Invalid password");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
         }
 
-
-        // Check OTP
-        if (!request.getOtp().equals(admin.getOtp())) {
-            return ResponseEntity.badRequest().body("Invalid OTP");
+        // Null-safe OTP check
+        if (admin.getOtp() == null || request.getOtp() == null || !request.getOtp().equals(admin.getOtp())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid OTP");
         }
 
         // Generate JWT
         String token = jwtUtil.generateToken(admin.getEmail(), admin.getRole().name());
 
-        // Clear OTP after successful login
-        adminService.save(admin);
+
 
         Map<String, Object> response = new HashMap<>();
         response.put("token", token);
