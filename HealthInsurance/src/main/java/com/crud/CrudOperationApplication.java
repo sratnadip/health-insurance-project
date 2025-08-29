@@ -30,7 +30,7 @@ public class CrudOperationApplication {
 			return args -> {
 				if (!adminRepository.existsByRole(Role.SUPER_ADMIN)) {
 					Admin superAdmin = new Admin();
-					superAdmin.setEmail("superadmin@example.com");
+					superAdmin.setEmail("superadmin@gmail.com");
 					superAdmin.setPassword(passwordEncoder.encode("superadmin@123"));
 					superAdmin.setRole(Role.SUPER_ADMIN);
 					superAdmin.setStatus(com.crud.enums.AdminStatus.APPROVED);
@@ -41,6 +41,7 @@ public class CrudOperationApplication {
 			};
 		}
 	}
+
 
 
 
