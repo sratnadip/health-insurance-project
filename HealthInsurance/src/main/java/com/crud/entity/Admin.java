@@ -21,6 +21,10 @@ public class Admin {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(unique = true, nullable = false)
+    private String gstNumber;
+
+
     @Enumerated(EnumType.STRING)
     private AdminStatus status = AdminStatus.PENDING;
 
@@ -46,6 +50,9 @@ public class Admin {
     public void setRole(Role role) {
         this.role = role;
     }
+
+    public String getGstNumber() { return gstNumber; }
+    public void setGstNumber(String gstNumber) { this.gstNumber = gstNumber; }
 
     public AdminStatus getStatus() { return status; }
     public void setStatus(AdminStatus status) { this.status = status; }
