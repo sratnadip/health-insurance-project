@@ -38,10 +38,13 @@ public class AdminProfileServiceImpl implements AdminProfileService {
         admin.setPassword(adminDetails.getPassword());
         admin.setPhoneNumber(adminDetails.getPhoneNumber());
         admin.setDateOfBirth(adminDetails.getDateOfBirth());
-        admin.setGovernmentId(adminDetails.getGovernmentId());
         admin.setCompanyName(adminDetails.getCompanyName());
         admin.setCompanyType(adminDetails.getCompanyType());
-        admin.setGstOrPanNumber(adminDetails.getGstOrPanNumber());
+
+        // ✅ Update GST and PAN separately
+        admin.setGstNumber(adminDetails.getGstNumber());
+        admin.setPanNumber(adminDetails.getPanNumber());
+
         admin.setHeadOfficeAddress(adminDetails.getHeadOfficeAddress());
         admin.setCity(adminDetails.getCity());
         admin.setState(adminDetails.getState());

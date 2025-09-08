@@ -1,61 +1,19 @@
 package com.crud.confg;
 
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
-import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.UUID;
 
 @Component
 public class JwtUtil {
 
-    private final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-
+    // Generate short random token (8 chars)
     public String generateToken(String email, String role) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("role", "ROLE_" + role);
-
-        return Jwts.builder()
-                .setClaims(claims)
-           //   .claim("role", role)
-                .setSubject(email)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 2)) // 2 hour
-                .signWith(SignatureAlgorithm.HS256,SECRET_KEY)
-                .compact();
+        return UUID.randomUUID().toString().replace("-", "").substring(0, 8);
     }
 
-    public String extractEmail(String token) {
-
-        return getClaims(token).getSubject();
-    }
-
-    public boolean validateToken(String token, String email) {
-        return extractEmail(token).equals(email) && !isTokenExpired(token);
-    }
-
-    private Claims getClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(SECRET_KEY)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-    }
-
-    private boolean isTokenExpired(String token) {
-
-        return getClaims(token).getExpiration().before(new Date());
-    }
-
-
-    public Claims getAllClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(SECRET_KEY)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+    // Validate short token
+    public boolean validateToken(String token) {
+        return token != null && token.length() == 8;
     }
 }

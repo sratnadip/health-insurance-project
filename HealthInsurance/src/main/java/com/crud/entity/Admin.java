@@ -32,6 +32,12 @@ public class Admin {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String otp; // temporary OTP for login
 
+
+    // ✅ One-to-One Mapping with AdminProfile
+    @OneToOne(mappedBy = "admin", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private AdminProfile profile;
+
+
     // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

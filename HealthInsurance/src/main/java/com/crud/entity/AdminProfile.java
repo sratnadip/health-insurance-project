@@ -18,7 +18,7 @@ public class AdminProfile {
 
     // Extra Info
     private LocalDate dateOfBirth;
-    private String governmentId;
+
     private String companyName;
     private String companyType;
     private String PanNumber;
@@ -27,6 +27,9 @@ public class AdminProfile {
     private String state;
     private String country;
     private String pinCode;
+    private String gstNumber;
+
+
 
 
     // Mapping back to Admin
@@ -38,6 +41,22 @@ public class AdminProfile {
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
+    public String getGstNumber() {
+        return gstNumber;
+    }
+
+    public void setGstNumber(String gstNumber) {
+        this.gstNumber = gstNumber;
+    }
+
+    public String getPanNumber() {
+        return PanNumber;
+    }
+
+    public void setPanNumber(String panNumber) {
+        PanNumber = panNumber;
+    }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -54,17 +73,11 @@ public class AdminProfile {
     public LocalDate getDateOfBirth() { return dateOfBirth; }
     public void setDateOfBirth(LocalDate dateOfBirth) { this.dateOfBirth = dateOfBirth; }
 
-    public String getGovernmentId() { return governmentId; }
-    public void setGovernmentId(String governmentId) { this.governmentId = governmentId; }
-
     public String getCompanyName() { return companyName; }
     public void setCompanyName(String companyName) { this.companyName = companyName; }
 
     public String getCompanyType() { return companyType; }
     public void setCompanyType(String companyType) { this.companyType = companyType; }
-
-    public String getGstOrPanNumber() { return PanNumber; }
-    public void setGstOrPanNumber(String gstOrPanNumber) { this.PanNumber = gstOrPanNumber; }
 
     public String getHeadOfficeAddress() { return headOfficeAddress; }
     public void setHeadOfficeAddress(String headOfficeAddress) { this.headOfficeAddress = headOfficeAddress; }

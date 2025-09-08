@@ -1,6 +1,5 @@
 package com.crud.confg;
 
-import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,37 +30,24 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
         String token = null;
-        String email = null;
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);
-            try {
-                email = jwtUtil.extractEmail(token);
-            } catch (Exception e) {
-                System.out.println("Invalid JWT: " + e.getMessage());
-            }
         }
 
-        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            if (jwtUtil.validateToken(token, email)) {
+        if (token != null && jwtUtil.validateToken(token)) {
+            //  No claims anymore, so just set a dummy user
+            UserDetails userDetails = new User(
+                    "dummyUser",
+                    "",
+                    Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"))
+            );
 
+            UsernamePasswordAuthenticationToken authToken =
+                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                Claims claims = jwtUtil.getAllClaims(token);
-                String role = claims.get("role", String.class);
-
-
-                UserDetails userDetails = new User(
-                        email,
-                        "",
-                        Collections.singleton(new SimpleGrantedAuthority(role))
-                );
-
-                UsernamePasswordAuthenticationToken authToken =
-                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-                SecurityContextHolder.getContext().setAuthentication(authToken);
-            }
+            SecurityContextHolder.getContext().setAuthentication(authToken);
         }
 
         filterChain.doFilter(request, response);

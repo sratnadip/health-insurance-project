@@ -1,6 +1,7 @@
 package com.crud.serviceimpl;
 
 import com.crud.entity.Claim;
+import com.crud.entity.User;
 import com.crud.repository.ClaimRepository;
 import com.crud.repository.UserRepository;
 import com.crud.service.ClaimService;
