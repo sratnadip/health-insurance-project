@@ -5,45 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ed3426d-9ef3-4dbe-b4d0-f095b501458a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/crud/controller/AdminPolicyController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/crud/dto/AdminResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/crud/dto/PolicyPlanRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/crud/dto/PolicyPlanResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/crud/dto/UserPolicyResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/crud/dto/AdminResponse.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/crud/dto/PolicyPlanRequest.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/crud/dto/PolicyPlanResponse$AdminResponse.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/crud/dto/PolicyPlanResponse.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/crud/dto/UserPolicyResponse.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/crud/repository/PolicyPlanRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/controller/AdminpolicyController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/controller/ClaimController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/controller/ClaimController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/controller/UserPolicyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/controller/UserPolicyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/entity/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/entity/Admin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/entity/AdminProfile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/entity/AdminProfile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/entity/PolicyPlan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/entity/PolicyPlan.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/entity/UserPolicy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/entity/UserPolicy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/entity/UserProfile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/entity/UserProfile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/repository/PolicyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/repository/PolicyPlanRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/service/PolicyPlanservice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/service/PolicyPlanservice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/serviceimpl/PolicyPlanImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/serviceimpl/PolicyPlanImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/crud/serviceimpl/UserPolicyImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/crud/serviceimpl/UserPolicyImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/controller/AdminpolicyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/controller/AdminpolicyController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/controller/ClaimController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/controller/ClaimController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/controller/UserPolicyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/controller/UserPolicyController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/entity/Admin.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/entity/Admin.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/entity/AdminProfile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/entity/AdminProfile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/entity/PolicyPlan.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/entity/PolicyPlan.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/entity/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/entity/UserPolicy$UserPolicyBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/entity/UserPolicy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/entity/UserPolicy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/entity/UserProfile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/entity/UserProfile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/repository/PolicyRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/service/PolicyPlanservice.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/service/PolicyPlanservice.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/serviceimpl/PolicyPlanImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/serviceimpl/PolicyPlanImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/crud/serviceimpl/UserPolicyImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/crud/serviceimpl/UserPolicyImpl.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

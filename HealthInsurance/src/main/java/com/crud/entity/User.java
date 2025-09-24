@@ -2,6 +2,7 @@ package com.crud.entity;
 
 import com.crud.enums.Role;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -11,11 +12,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Entity
 @Data
 public class User {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,8 +23,13 @@ public class User {
     private String userName;
     private String email;
     private String password;
+
+    @JsonIgnore
     private String otp;
+
+    @JsonIgnore
     private boolean otpVerified;
+    @JsonIgnore
     private LocalDateTime otpGeneratedAt;
 
     @Enumerated(EnumType.STRING)
