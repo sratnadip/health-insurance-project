@@ -13,4 +13,5 @@ public interface UserPolicyService {
     UserPolicy getPolicyByUserId(Long userId);
     List<UserPolicy> getAllPoliciesByUserId(Long userId);
 
+
 }

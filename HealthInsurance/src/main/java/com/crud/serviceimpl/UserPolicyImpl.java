@@ -16,27 +16,30 @@ import java.util.List;
 public class UserPolicyImpl implements UserPolicyService {
 
     @Autowired
-    private PolicyPlanRepository policyPlanRepository;
+    private PolicyPlanRepository planRepository;
 
     @Autowired
     private UserPolicyRepository userPolicyRepository;
 
     @Override
     public UserPolicy purchasePolicy(PurchaseRequest request) {
-        PolicyPlan plan = policyPlanRepository.findById(request.getPolicyId())
+        PolicyPlan plan = planRepository.findById(request.getPolicyId())
                 .orElseThrow(() -> new RuntimeException("Policy Plan not found"));
 
-        // Create UserPolicy manually without builder
-        UserPolicy userPolicy = new UserPolicy();
-        userPolicy.setUserId(request.getUserId());
-        userPolicy.setPolicyPlan(plan);
-        userPolicy.setStartDate(LocalDate.now());
-        userPolicy.setEndDate(LocalDate.now().plusYears(plan.getDurationInYears()));
-        userPolicy.setPolicyStatus("ACTIVE");
-        userPolicy.setNominee(request.getNominee());
-        userPolicy.setNomineeRelation(request.getNomineeRelation());
+        UserPolicy userPolicy = UserPolicy.builder()
+                .userId(request.getUserId())
+                .policyPlan(plan)
+                .startDate(LocalDate.now())
+                .endDate(LocalDate.now().plusYears(plan.getDurationInYears()))
+                .policyStatus("ACTIVE")
+                .nominee(request.getNominee())
+                .nomineeRelation(request.getNomineeRelation())
+                .build();
 
         return userPolicyRepository.save(userPolicy);
+
+
+
     }
 
     @Override
@@ -49,4 +52,6 @@ public class UserPolicyImpl implements UserPolicyService {
     public List<UserPolicy> getAllPoliciesByUserId(Long userId) {
         return userPolicyRepository.findAllByUserId(userId);
     }
+
+
 }
