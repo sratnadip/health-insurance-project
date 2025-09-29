@@ -13,6 +13,6 @@ public interface DocumentService {
     Document updateDocument(Long id, MultipartFile file, String documentName);
     void deleteDocument(Long id);
 
-    // NEW: download support
+    // download support
     Resource loadFileAsResource(Long id);
 }

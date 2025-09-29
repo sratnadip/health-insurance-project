@@ -51,7 +51,7 @@ public class DocumentServiceImpl implements DocumentService {
             Document document = new Document();
             document.setUser(user);
             document.setDocumentName(documentName);
-            document.setOriginalFileName(file.getOriginalFilename()); // save real name
+            document.setOriginalFileName(file.getOriginalFilename());
             document.setUploadedAt(LocalDateTime.now());
             document.setFilePath(fullPath);
 
@@ -83,13 +83,9 @@ public class DocumentServiceImpl implements DocumentService {
             }
 
             if (file != null && !file.isEmpty()) {
-                // delete old file
                 File oldFile = new File(existingDoc.getFilePath());
-                if (oldFile.exists()) {
-                    oldFile.delete();
-                }
+                if (oldFile.exists()) oldFile.delete();
 
-                // save new file
                 String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
                 String fullPath = uploadDir + fileName;
                 file.transferTo(new File(fullPath));
@@ -109,11 +105,8 @@ public class DocumentServiceImpl implements DocumentService {
     public void deleteDocument(Long id) {
         Document existingDoc = getDocumentById(id);
 
-        // delete file from storage
         File file = new File(existingDoc.getFilePath());
-        if (file.exists()) {
-            file.delete();
-        }
+        if (file.exists()) file.delete();
 
         documentRepository.delete(existingDoc);
     }

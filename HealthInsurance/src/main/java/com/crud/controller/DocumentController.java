@@ -4,7 +4,6 @@ import com.crud.entity.Document;
 import com.crud.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,7 +24,7 @@ public class DocumentController {
     @Autowired
     private DocumentService documentService;
 
-    // ----------------- Upload Document -----------------
+    // Upload
     @PostMapping("/upload")
     public ResponseEntity<?> uploadDocument(
             @RequestParam("file") MultipartFile file,
@@ -41,14 +40,14 @@ public class DocumentController {
         }
     }
 
-    // ----------------- Get All Documents -----------------
+    // Get all
     @GetMapping
     public ResponseEntity<List<Document>> getAllDocuments() {
         List<Document> documents = documentService.getAllDocuments();
         return ResponseEntity.ok(documents);
     }
 
-    // ----------------- Get Document By Id -----------------
+    // Get by id
     @GetMapping("/{id}")
     public ResponseEntity<?> getDocumentById(@PathVariable Long id) {
         try {
@@ -59,19 +58,14 @@ public class DocumentController {
         }
     }
 
-    // ----------------- View Document in Browser -----------------
+    // View in browser
     @GetMapping("/view/{id}")
     public ResponseEntity<Resource> viewDocument(@PathVariable Long id) {
         try {
             Document document = documentService.getDocumentById(id);
             Path filePath = Paths.get(document.getFilePath()).normalize();
+            Resource resource = documentService.loadFileAsResource(id);
 
-            Resource resource = new UrlResource(filePath.toUri());
-            if (!resource.exists()) {
-                return ResponseEntity.notFound().build();
-            }
-
-            // Detect file type
             String contentType;
             try {
                 contentType = Files.probeContentType(filePath);
@@ -79,14 +73,9 @@ public class DocumentController {
                 contentType = "application/octet-stream";
             }
 
-            if (contentType == null) {
-                contentType = "application/octet-stream";
-            }
-
             return ResponseEntity.ok()
                     .contentType(MediaType.parseMediaType(contentType))
-                    .header(HttpHeaders.CONTENT_DISPOSITION,
-                            "inline; filename=\"" + filePath.getFileName().toString() + "\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + document.getOriginalFileName() + "\"")
                     .body(resource);
 
         } catch (Exception e) {
@@ -94,17 +83,13 @@ public class DocumentController {
         }
     }
 
-    // ----------------- Download Document -----------------
+    // Download
     @GetMapping("/download/{id}")
     public ResponseEntity<Resource> downloadDocument(@PathVariable Long id) {
         try {
             Document document = documentService.getDocumentById(id);
             Path filePath = Paths.get(document.getFilePath()).normalize();
-
-            Resource resource = new UrlResource(filePath.toUri());
-            if (!resource.exists()) {
-                return ResponseEntity.notFound().build();
-            }
+            Resource resource = documentService.loadFileAsResource(id);
 
             String contentType;
             try {
@@ -113,14 +98,9 @@ public class DocumentController {
                 contentType = "application/octet-stream";
             }
 
-            if (contentType == null) {
-                contentType = "application/octet-stream";
-            }
-
             return ResponseEntity.ok()
                     .contentType(MediaType.parseMediaType(contentType))
-                    .header(HttpHeaders.CONTENT_DISPOSITION,
-                            "attachment; filename=\"" + filePath.getFileName().toString() + "\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + document.getOriginalFileName() + "\"")
                     .body(resource);
 
         } catch (Exception e) {
@@ -128,7 +108,7 @@ public class DocumentController {
         }
     }
 
-    // ----------------- Update Document -----------------
+    // Update
     @PutMapping("/{id}")
     public ResponseEntity<?> updateDocument(
             @PathVariable Long id,
@@ -143,7 +123,7 @@ public class DocumentController {
         }
     }
 
-    // ----------------- Delete Document -----------------
+    // Delete
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteDocument(@PathVariable Long id) {
         try {
@@ -154,4 +134,3 @@ public class DocumentController {
         }
     }
 }
- 

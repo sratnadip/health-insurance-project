@@ -10,11 +10,11 @@ public class Document {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long claimDocumentId;
+    private Long documentId;  // updated
 
     private String documentName;
 
-    private String originalFileName; // NEW: keeps real filename
+    private String originalFileName;
 
     private LocalDateTime uploadedAt;
 
@@ -28,12 +28,12 @@ public class Document {
 
     public Document() {}
 
-    public Long getClaimDocumentId() {
-        return claimDocumentId;
+    public Long getDocumentId() {
+        return documentId;
     }
 
-    public void setClaimDocumentId(Long claimDocumentId) {
-        this.claimDocumentId = claimDocumentId;
+    public void setDocumentId(Long documentId) {
+        this.documentId = documentId;
     }
 
     public String getDocumentName() {
