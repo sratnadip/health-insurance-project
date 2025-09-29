@@ -1,21 +1,22 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import AddPolicy from "./pages/AddPolicy";
+
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+
 import Home from "./pages/Home";
 import AuthPage from "./pages/UserLogin/AuthPage";
-import AdminDashboard from "./pages/AdminDashboard";
 import Support from "./pages/Support";
 import AvailablePolicies from "./pages/AvailablePolicies";
 import HospitalSearch from "./pages/HospitalSearch";
 import Teleconsultation from "./pages/Teleconsultation";
-import ViewPolicies from "./pages/ViewPolicies";
-import AdminUsers from "./pages/AdminUsers";
-import UserDashboard from "./pages/UserDashboard";
-import Footer from "./components/Footer";
 import Claims from "./pages/Claims";
+import UserDashboard from "./pages/UserDashboard";
 import { AuthProvider } from "./context/AuthContext";
+
+// 🔹 Admin Pages
 import AdminRegister from "./pages/Admin/AdminRegister";
 import AdminLogin from "./pages/Admin/AdminLogin";
+import AdminDashboard from "./pages/Admin/AdminDashboard"; 
 
 // 🔹 SuperAdmin Pages
 import SuperAdminLogin from "./pages/SuperAdmin/SuperAdminLogin";
@@ -31,27 +32,24 @@ import SuperAdminAdmins from "./pages/SuperAdmin/Admins/SuperAdminAdmins";
 function App() {
   const location = useLocation();
 
-  // Routes where Navbar should not be visible
   const hideNavbarRoutes = [
     "/auth",
     "/superadmin/login",
     "/superadmin/dashboard",
   ];
 
-  // Routes where Footer should not be visible
   const hideFooterRoutes = [
     "/admin/dashboard",
-    "/admin/users",
-    "/admin/add-policy",
-    "/admin/view-policies",
+    "/admin/register",
+    "/admin/login",
     "/superadmin/login",
     "/superadmin/dashboard",
   ];
 
-  const shouldHideNavbar = hideNavbarRoutes.some((route) =>
+  const shouldHideNavbar = hideNavbarRoutes.some(route =>
     location.pathname.startsWith(route)
   );
-  const shouldHideFooter = hideFooterRoutes.some((route) =>
+  const shouldHideFooter = hideFooterRoutes.some(route =>
     location.pathname.startsWith(route)
   );
 
@@ -82,12 +80,9 @@ function App() {
         <Route path="/available-policies/:id" element={<AvailablePolicies />} />
 
         {/* 🔹 Admin Routes */}
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/add-policy" element={<AddPolicy />} />
-        <Route path="/admin/view-policies" element={<ViewPolicies />} />
-        <Route path="/admin/users" element={<AdminUsers />} />
-        <Route path="/admin/register" element={<AdminRegister />} />
+        <Route path="/Admin/AdminRegister" element={<AdminRegister />} />
         <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/dashboard/*" element={<AdminDashboard />} />
 
         {/* 🔹 Super Admin Routes */}
         <Route path="/superadmin/login" element={<SuperAdminLogin />} />

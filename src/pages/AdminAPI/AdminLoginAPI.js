@@ -7,37 +7,45 @@ const axiosInstance = axios.create({
   },
 });
 
+// Add token to headers for protected routes
 axiosInstance.interceptors.request.use(
   (config) => {
-    // Skip token for register/login/verify-otp
     if (
       !config.url.includes("/api/admin/register") &&
       !config.url.includes("/api/admin/login") &&
       !config.url.includes("/api/admin/verify-otp")
     ) {
-      const authData = JSON.parse(localStorage.getItem("authData"));
-      const token = authData?.token;
-      if (token) {
-        config.headers["Authorization"] = `Bearer ${token}`;
-      }
+      const adminToken = sessionStorage.getItem("adminToken"); // 🔹 use sessionStorage
+      if (adminToken) config.headers["Authorization"] = `Bearer ${adminToken}`;
     }
     return config;
   },
   (error) => Promise.reject(error)
 );
 
+// Step 1: login and send OTP
 export const login = async (email, password) => {
   const res = await axiosInstance.post("/api/admin/login", { email, password });
+
+  // Store token if SUPER_ADMIN (skip OTP)
+  if (res.data?.token && res.data?.role === "SUPER_ADMIN") {
+    sessionStorage.setItem("adminToken", res.data.token); // 🔹 sessionStorage
+    sessionStorage.setItem("adminData", JSON.stringify(res.data)); // 🔹 sessionStorage
+  }
+
   return res.data;
 };
 
+// Step 2: verify OTP
 export const verifyOtp = async (email, otp, password) => {
-  const response = await axiosInstance.post("/api/admin/verify-otp", {
-    email,
-    otp,
-    password,
-  });
-  return response.data;
+  const res = await axiosInstance.post("/api/admin/verify-otp", { email, otp, password });
+
+  if (res.data?.token) {
+    sessionStorage.setItem("adminToken", res.data.token); // 🔹 sessionStorage
+    sessionStorage.setItem("adminData", JSON.stringify(res.data)); // 🔹 sessionStorage
+  }
+
+  return res.data;
 };
 
 export default axiosInstance;

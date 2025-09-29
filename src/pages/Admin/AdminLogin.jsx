@@ -1,60 +1,63 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import "./AdminLogin.css";
 import { login, verifyOtp } from "../../pages/AdminAPI/AdminLoginAPI";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
-  const { loginUser } = useContext(AuthContext);
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    otp: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "", otp: "" });
   const [message, setMessage] = useState("");
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  // Handle input changes
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  // Step 1: Login and send OTP
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await login(formData.email, formData.password);
+      const res = await login(formData.email, formData.password);
+
+      // If SUPER_ADMIN, directly store token and navigate
+      if (res.token && res.role === "SUPER_ADMIN") {
+        sessionStorage.setItem("adminId", res.id || "1");
+        sessionStorage.setItem("adminRole", res.role);
+        sessionStorage.setItem("adminToken", res.token);
+        sessionStorage.setItem("adminUsername", res.username || "SuperAdmin");
+        navigate("/Admin/Dashboard");
+        return;
+      }
+
       setMessage("OTP sent to your email.");
       setStep(2);
     } catch (err) {
-      setMessage(err.response?.data?.message || "Login failed");
+      setMessage(err.response?.data || "Login failed");
     }
   };
 
+  // Step 2: Verify OTP
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     try {
       const res = await verifyOtp(formData.email, formData.otp, formData.password);
 
+      // Save admin info in sessionStorage
+      sessionStorage.setItem("adminId", res.id);
+      sessionStorage.setItem("adminRole", res.role);
+      sessionStorage.setItem("adminToken", res.token);
+      sessionStorage.setItem("adminUsername", res.username);
 
-      const adminData = {
-        adminId: res?.adminId,
-        userName: res?.userName,
-        role: res?.role,
-        token: res?.token,
-      };
-
-      loginUser(adminData);
       setMessage("Login successful!");
       navigate("/Admin/Dashboard");
     } catch (err) {
-      setMessage(err.response?.data?.message || "Invalid OTP");
+      setMessage(err.response?.data || "Invalid OTP");
     }
   };
 
   return (
     <div className="auth-page">
       <div className="auth-form">
-        <h2>{step === 1 ? "AdminLogin" : "Verify OTP"}</h2>
+        <h2>{step === 1 ? "Admin Login" : "Verify OTP"}</h2>
 
         {step === 1 && (
           <form onSubmit={handleLogin}>
@@ -75,15 +78,6 @@ export default function AdminLogin() {
               required
             />
             <button type="submit">Send OTP</button>
-            <p className="footer-text">
-              Don’t have an account?{" "}
-              <span
-                className="fake-link"
-                onClick={() => navigate("/Admin/AdminRegister")}
-              >
-                Register
-              </span>
-            </p>
           </form>
         )}
 
