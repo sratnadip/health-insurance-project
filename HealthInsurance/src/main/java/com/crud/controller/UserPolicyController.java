@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/user-policy")
 public class UserPolicyController {
 
     @Autowired
@@ -22,37 +22,79 @@ public class UserPolicyController {
     @Autowired
     private UserPolicyService userPolicyService;
 
-    @GetMapping("/fetch-plan")
-    public List<PolicyPlan> getAvailablePlans() {
 
-        return policyPlanService.getAllPlans();
-    }
-
-    @PostMapping("/add-policy")
-    public UserPolicyResponse purchase(@RequestBody PurchaseRequest request) {
+    @PostMapping("/purchase")
+    public ResponseEntity<UserPolicyResponse> purchasePolicy(@RequestBody PurchaseRequest request) {
         UserPolicy userPolicy = userPolicyService.purchasePolicy(request);
 
-        return new UserPolicyResponse(
-                userPolicy.getId(),          // policyId
+        UserPolicyResponse response = new UserPolicyResponse(
+                userPolicy.getId(),
                 userPolicy.getUserId(),
                 userPolicy.getPolicyStatus(),
                 userPolicy.getStartDate(),
                 userPolicy.getEndDate()
         );
+
+        return ResponseEntity.ok(response);
     }
 
 
-    //    @GetMapping("/get-policy/{userId}")
-//    public ResponseEntity<UserPolicy> getPolicyByUserId(@PathVariable Long userId) {
-//        UserPolicy userPolicy = userPolicyService.getPolicyByUserId(userId);
-//        return ResponseEntity.ok(userPolicy);
-//
-//    }
-    @GetMapping("/get-policies/{userId}")
-    public ResponseEntity<List<UserPolicy>> getPoliciesByUserId(@PathVariable Long userId) {
-        List<UserPolicy> policies = userPolicyService.getAllPoliciesByUserId(userId);
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<UserPolicyResponse>> getUserPolicies(@PathVariable Long userId) {
+        List<UserPolicyResponse> policies = userPolicyService.getAllPoliciesByUserId(userId)
+                .stream()
+                .map(policy -> new UserPolicyResponse(
+                        policy.getId(),
+                        policy.getUserId(),
+                        policy.getPolicyStatus(),
+                        policy.getStartDate(),
+                        policy.getEndDate()
+                ))
+                .toList();
+
         return ResponseEntity.ok(policies);
     }
 
 
+    @GetMapping("/all")
+    public ResponseEntity<List<UserPolicyResponse>> getAllPolicies() {
+        List<UserPolicyResponse> policies = userPolicyService.getAllPolicies()
+                .stream()
+                .map(policy -> new UserPolicyResponse(
+                        policy.getId(),
+                        policy.getUserId(),
+                        policy.getPolicyStatus(),
+                        policy.getStartDate(),
+                        policy.getEndDate()
+                ))
+                .toList();
+
+        return ResponseEntity.ok(policies);
+    }
+
+
+    @PutMapping("/update/{policyId}")
+    public ResponseEntity<UserPolicyResponse> updatePolicy(
+            @PathVariable Long policyId,
+            @RequestBody UserPolicy updatedPolicy) {
+
+        UserPolicy policy = userPolicyService.updatePolicy(policyId, updatedPolicy);
+
+        UserPolicyResponse response = new UserPolicyResponse(
+                policy.getId(),
+                policy.getUserId(),
+                policy.getPolicyStatus(),
+                policy.getStartDate(),
+                policy.getEndDate()
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
+
+    @DeleteMapping("/delete/{policyId}")
+    public ResponseEntity<String> deletePolicy(@PathVariable Long policyId) {
+        userPolicyService.deletePolicy(policyId);
+        return ResponseEntity.ok("Policy with ID " + policyId + " deleted successfully.");
+    }
 }

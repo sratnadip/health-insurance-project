@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="845bf92b-1c85-440b-bed8-5bacfa7b65cd" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/UserPolicyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/UserPolicyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/service/UserPolicyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/service/UserPolicyService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/serviceimpl/UserPolicyImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/serviceimpl/UserPolicyImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "samiksha9911"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Suyog-Ghadage/InsuranceProject.git",
+    "accountId": "c05cac84-d14d-473e-b6be-4b6cf2cde8a4"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="33Pwof2MDCHHWJztGAwXjozpNYH" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.CrudOperationApplication.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "BackEnd"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="845bf92b-1c85-440b-bed8-5bacfa7b65cd" name="Changes" comment="" />
+      <created>1759232191013</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1759232191013</updated>
+    </task>
+    <servers />
+  </component>
+</project>

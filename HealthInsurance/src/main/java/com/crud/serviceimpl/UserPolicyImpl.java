@@ -37,9 +37,6 @@ public class UserPolicyImpl implements UserPolicyService {
                 .build();
 
         return userPolicyRepository.save(userPolicy);
-
-
-
     }
 
     @Override
@@ -53,5 +50,35 @@ public class UserPolicyImpl implements UserPolicyService {
         return userPolicyRepository.findAllByUserId(userId);
     }
 
+    @Override
+    public List<UserPolicy> getAllPolicies() {
+        return userPolicyRepository.findAll();
+    }
 
+    @Override
+    public UserPolicy updatePolicy(Long policyId, UserPolicy updatedPolicy) {
+        UserPolicy policy = userPolicyRepository.findById(policyId)
+                .orElseThrow(() -> new RuntimeException("Policy not found with id " + policyId));
+
+        if (updatedPolicy.getNominee() != null) {
+            policy.setNominee(updatedPolicy.getNominee());
+        }
+        if (updatedPolicy.getNomineeRelation() != null) {
+            policy.setNomineeRelation(updatedPolicy.getNomineeRelation());
+        }
+        if (updatedPolicy.getPolicyStatus() != null) {
+            policy.setPolicyStatus(updatedPolicy.getPolicyStatus());
+        }
+
+        return userPolicyRepository.save(policy);
+    }
+
+    @Override
+    public void deletePolicy(Long policyId) {
+        if (!userPolicyRepository.existsById(policyId)) {
+            throw new RuntimeException("Policy not found with id " + policyId);
+        }
+        userPolicyRepository.deleteById(policyId);
+    }
 }
+

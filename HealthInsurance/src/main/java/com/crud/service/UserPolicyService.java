@@ -9,9 +9,12 @@ import java.util.Optional;
 public interface UserPolicyService {
 
     UserPolicy purchasePolicy(PurchaseRequest request);
-  //  Optional<UserPolicy> getPolicyById(Long id);
     UserPolicy getPolicyByUserId(Long userId);
     List<UserPolicy> getAllPoliciesByUserId(Long userId);
 
-
+    List<UserPolicy> getAllPolicies();
+    UserPolicy updatePolicy(Long policyId, UserPolicy updatedPolicy);
+    void deletePolicy(Long policyId);
 }
+
+
