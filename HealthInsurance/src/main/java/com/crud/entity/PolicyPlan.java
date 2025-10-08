@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PolicyPlan {
 
     @Id
@@ -30,3 +31,4 @@ public class PolicyPlan {
 
 
 }
+
