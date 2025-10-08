@@ -12,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "admins")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Admin {
 
     @Id
@@ -85,3 +86,4 @@ public class Admin {
     public List<PolicyPlan> getPolicyPlans() { return policyPlans; }
     public void setPolicyPlans(List<PolicyPlan> policyPlans) { this.policyPlans = policyPlans; }
 }
+
