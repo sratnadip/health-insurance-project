@@ -24,7 +24,8 @@ public class ClaimImpl implements ClaimService {
     public Claim addClaim(Claim claim) {
         Long userId = claim.getUser().getUserId();
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+
         claim.setUser(user);
         return claimRepo.save(claim);
 

@@ -41,20 +41,6 @@ public class UserPolicyController {
         return ResponseEntity.ok(response);
     }
 
-   /* @PutMapping("/approve/{policyId}")
-    public ResponseEntity<String> approvePolicy(@PathVariable Long policyId) {
-        UserPolicy policy = userPolicyService.getPolicyById(policyId);
-
-        if (policy == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        policy.setPolicyStatus("ACTIVE");
-        userPolicyService.updatePolicy(policyId, policy);
-
-        return ResponseEntity.ok("Policy ID " + policyId + " approved successfully.");
-    }
-*/
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<UserPolicyResponse>> getUserPolicies(@PathVariable Long userId) {
         List<UserPolicyResponse> policies = userPolicyService.getAllPoliciesByUserId(userId)

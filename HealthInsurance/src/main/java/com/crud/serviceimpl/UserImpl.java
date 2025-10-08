@@ -64,14 +64,6 @@ public class UserImpl implements UserService {
         }
     }
 
-//    @Override
-//    public User loginUser(String email, String password) {
-//        Optional<User> user = repository.findByEmailAndPassword(email, password);
-//        if (user.isPresent()) {
-//            return user.get();
-//        } else {
-//            return null;
-//        }
 
 
 }
