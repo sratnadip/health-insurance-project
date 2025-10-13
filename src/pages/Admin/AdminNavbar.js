@@ -32,7 +32,7 @@ const styles = {
   navbar: {
     width: "100%",
     height: "60px",
-    background: "linear-gradient(90deg, #1565c0, #1565c0)",
+    background: "linear-gradient(90deg, #9333ea, #ec4899)", // purple → pink
     color: "#fff",
     display: "flex",
     alignItems: "center",
