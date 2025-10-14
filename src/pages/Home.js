@@ -2,14 +2,14 @@ import IntroBanner from '../components/IntroBanner';
 import WhyChoose from '../components/WhyChoose';
 import HealthPlans from '../components/HealthPlans';
 import WhyChooseUs from '../components/WhyChooseUs';
-import Faqs from '../components/Faqs';
-import { Link } from 'react-router-dom';
+// import Faqs from '../components/Faqs';
+// import { Link } from 'react-router-dom';
 import './Home.css';
 import ServiceHighlights from '../components/ServiceHighlights';
 import HowItWorks from '../components/HowItWorks';
 
 export default function Home() {
-  const userRole = sessionStorage.getItem('userRole');
+  // const userRole = sessionStorage.getItem('userRole');
 
   return (
     <div className="home-page">

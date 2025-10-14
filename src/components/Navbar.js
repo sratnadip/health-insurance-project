@@ -63,7 +63,7 @@ export default function Navbar() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
+  
   return (
     <nav className="navbar">
       <div className="logo-section">
@@ -88,15 +88,15 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* <Link to="/claims" className="nav-link">Claims</Link> */}
+            <Link to="/claims" className="nav-link">Claims</Link>
 
             {/* Profile Icon Dropdown */}
             <div className="profile-icon" ref={profileRef}>
               <FaUserCircle className="user-icon" onClick={toggleProfile} />
-
+    
               {showProfile && (
                 <div className="profile-dropdown">
-                  <p className="user-name">{userDetails?.name || 'Samiksha P'}</p>
+                  {/* <p className="user-name">{userDetails?.name || ''}</p> */}
                   <p className="user-email">{userDetails?.email || 'user@mail.com'}</p>
                   <hr />
                   <Link

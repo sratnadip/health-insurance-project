@@ -22,7 +22,7 @@ export default function SuperAdminAdmins() {
         <Tab label="📋 Admin List" />
         <Tab label="✅ Admin Approvals" />
       </Tabs>
-
+       
       {activeTab === 0 && <AdminList />}
       {activeTab === 1 && <AdminApprovals />}
     </Box>

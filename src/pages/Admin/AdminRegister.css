@@ -1,11 +1,3 @@
-/* Full-page background */
-body, html {
-  height: 100%;
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  overflow: hidden; /* optional: removes scroll bar */
-}
-
 .admin-register-page {
   display: flex;
   justify-content: center;
@@ -18,6 +10,7 @@ body, html {
   background-repeat: no-repeat;
   background-attachment: fixed;   /* keeps image fixed while scrolling */
   position: relative;
+  overflow: hidden; 
 }
 
 .admin-register-page::before {
