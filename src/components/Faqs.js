@@ -18,11 +18,11 @@ export default function Faqs() {
     };
     fetchFaqs();
   }, []);
-
+ 
   const toggle = (index) => {
     setActiveIndex(index === activeIndex ? null : index);
   };
-
+  
   return (
     <div className="faq-section">
       <h2>Frequently Asked Questions</h2>

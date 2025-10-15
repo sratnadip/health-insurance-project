@@ -25,6 +25,8 @@ import SuperAdminRoute from "./pages/SuperAdmin/SuperAdminRoute";
 import SuperAdminUsers from "./pages/SuperAdmin/Users/SuperAdminUsers";
 import SuperAdminAdmins from "./pages/SuperAdmin/Admins/SuperAdminAdmins";
 
+import SuperAdminFAQs from "./pages/SuperAdmin/FAQs/SuperAdminFAQs";
+
 function App() {
   const location = useLocation();
 
@@ -111,6 +113,16 @@ function App() {
           element={
             <SuperAdminRoute>
               <SuperAdminUsers />
+            </SuperAdminRoute>
+          }
+        />
+
+        {/* ✅ NEW SuperAdmin FAQs Route */}
+        <Route
+          path="/superadmin/dashboard/faqs"
+          element={
+            <SuperAdminRoute>
+              <SuperAdminFAQs />
             </SuperAdminRoute>
           }
         />

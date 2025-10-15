@@ -1,25 +1,32 @@
 import React from "react";
-import { LogOut, UserCircle } from "lucide-react";
+import { LogOut, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function SuperAdminNavbar() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    
+    // Clear token and role if used
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
     navigate("/superadmin/login");
+  };
+
+  const handleProfile = () => {
+    navigate("/superadmin/dashboard/profile");
   };
 
   return (
     <div style={styles.navbar}>
-     
       <div style={styles.left}>
         <h2 style={styles.logo}>Super Admin Dashboard</h2>
       </div>
 
-     
       <div style={styles.right}>
-        <UserCircle size={28} style={styles.icon} />
+        <button style={styles.profileBtn} onClick={handleProfile}>
+          <User size={18} style={{ marginRight: "6px" }} />
+          Profile
+        </button>
         <button style={styles.logoutBtn} onClick={handleLogout}>
           <LogOut size={18} style={{ marginRight: "6px" }} />
           Logout
@@ -57,13 +64,21 @@ const styles = {
     alignItems: "center",
     gap: "15px",
   },
-  icon: {
+  profileBtn: {
+    display: "flex",
+    alignItems: "center",
+    backgroundColor: "#10b981", // green for profile
+    color: "#fff",
+    border: "none",
+    padding: "6px 12px",
+    borderRadius: "6px",
     cursor: "pointer",
+    fontSize: "14px",
   },
   logoutBtn: {
     display: "flex",
     alignItems: "center",
-    backgroundColor: "#ef4444",
+    backgroundColor: "#ef4444", // red for logout
     color: "#fff",
     border: "none",
     padding: "6px 12px",
