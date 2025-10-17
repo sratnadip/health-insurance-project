@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { LayoutDashboard, Users, FileText, UserCircle } from "lucide-react";
-import logo from "../../assets/logo.png"; // ✅ Import your logo
+import logo from "../../assets/logo.png"; 
 
 export default function AdminSidebar() {
   const menuItems = [
@@ -14,7 +14,7 @@ export default function AdminSidebar() {
 
   return (
     <div style={styles.sidebar}>
-      {/* ✅ Logo instead of heading */}
+      {/* Logo instead of heading */}
       <div style={styles.logoContainer}>
         <img src={logo} alt="Admin Logo" style={styles.logo} />
       </div>
@@ -27,7 +27,7 @@ export default function AdminSidebar() {
             style={({ isActive }) => ({
               ...styles.link,
               background: isActive
-                ? "linear-gradient(135deg, rgba(63, 117, 243, 1), rgba(64, 41, 235, 1))"
+                ? "linear-gradient(135deg, rgba(63, 117, 243, 0.44), rgba(64, 41, 235, 1))"
                 : "#fff",
               color: isActive ? "#fff" : "#000000ff",
               boxShadow: isActive
@@ -59,7 +59,7 @@ const styles = {
     zIndex: 100,
   },
 
-  // ✅ New logo container
+  
   logoContainer: {
     display: "flex",
     justifyContent: "center",
@@ -67,7 +67,7 @@ const styles = {
     marginBottom: "30px",
   },
 
-  // ✅ Logo style
+  
   logo: {
     width: "140px",
     height: "auto",

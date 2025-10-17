@@ -4,9 +4,43 @@
   background-color: #f9f9f9;
 }
 
+/* Fixed Sidebar */
+.user-dashboard-container > :first-child {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px; 
+  height: 100vh;
+  background-color: #ffffff;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+/* Main Content Area */
+.user-dashboard-main {
+  margin-left: 200px; 
+  width: calc(100% - 200px);
+  display: flex;
+  flex-direction: column;
+}
+
+
+.dashboard-heading {
+  color: #091b2f;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  margin: 5px 0;
+  background-color: #c5d5ed;
+  padding: 10px 0;
+  border-bottom: 2px solid #ddd;
+}
+
+
 .user-dashboard-content {
   flex-grow: 1;
-  padding: 30px;
+  padding: 10px;
   background-color: #fff;
-  padding-top: 7rem;
+  min-height: calc(100vh - 80px);
+  overflow-y: auto;
 }

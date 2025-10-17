@@ -27,6 +27,8 @@ import SuperAdminAdmins from "./pages/SuperAdmin/Admins/SuperAdminAdmins";
 
 import SuperAdminFAQs from "./pages/SuperAdmin/FAQs/SuperAdminFAQs";
 
+import ContactForm from "./components/ContactForm";
+
 function App() {
   const location = useLocation();
 
@@ -36,7 +38,8 @@ function App() {
     "/superadmin/dashboard",
     "/admin/login",
     "/admin/dashboard",
-    "/Admin/AdminRegister"
+    "/Admin/AdminRegister",
+    "/dashboard"
   ];
 
   const hideFooterRoutes = [
@@ -76,6 +79,8 @@ function App() {
             </div>
           }
         />
+
+        <Route path="/register-agent" element={<ContactForm />} />
 
         {/*  User Dashboard */}
         <Route path="/dashboard/*" element={<UserDashboard />} />

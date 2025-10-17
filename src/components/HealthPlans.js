@@ -3,61 +3,66 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import individualImg from '../assets/individual.png';
-import familyImg from '../assets/family.png';
-import seniorImg from '../assets/senior.png';
-import criticalImg from '../assets/critical.png';
-import defaultImg from '../assets/default.png'; 
-
 export default function HealthPlans() {
   const navigate = useNavigate();
   const [plans, setPlans] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:8089/admin/policy-plans/all')  
+    axios
+      .get('http://localhost:8089/admin/policy-plans/all')
       .then((res) => setPlans(res.data))
-      .catch((err) => console.error("Error fetching health plans:", err));
+      .catch((err) => console.error("Error fetching health plans:", err))
+      .finally(() => setLoading(false));
   }, []);
 
-  const handleViewPlan = (policyId) => {
-    const userId = sessionStorage.getItem("userId");
-    if (!userId) {
+  const handleViewPlan = (planId) => {
+    const authData = JSON.parse(localStorage.getItem("authData") || "null");
+
+    if (!authData?.userId) {
       alert("Please login to view policies.");
-      navigate("/auth", { state: { redirectAfterLogin: `/available-policies/${policyId}` } });
+      navigate("/auth", {
+        state: { redirectAfterLogin: `/available-policies/${planId}` },
+      });
     } else {
-      navigate(`/available-policies/${policyId}`);
+      navigate(`/available-policies/${planId}`, { state: { fromHome: true } });
     }
   };
 
-  const getPlanImage = (name = "") => {
-    const key = name.toLowerCase();
-    if (key.includes("family")) return familyImg;
-    if (key.includes("senior")) return seniorImg;
-    if (key.includes("critical")) return criticalImg;
-    if (key.includes("individual")) return individualImg;
-    return defaultImg; 
+  const getImageUrl = (plan) => {
+    return plan?.imageUrl
+      ? `http://localhost:8089/admin/policy-plans/view-image/${plan.id}`
+      : null;
   };
 
+  if (loading) return <p className="loading-text">Loading plans...</p>;
+
   return (
-    <section className="insurance-categories">
+    <section className="insurance-categories" id="health-plans">
       <h2>Explore Our Health Insurance Plans</h2>
       <div className="categories-grid">
-        {plans.map((plan) => (
-          <div key={plan.policyId} className="category-tile">
-            <img
-              src={getPlanImage(plan.planName)}
-              alt={plan.planName}
-              className="category-img"
-            />
-            <h3>{plan.planName}</h3>
-            <button
-              className="category-link"
-              onClick={() => handleViewPlan(plan.policyId)}
-            >
-              View Plan
-            </button>
-          </div>
-        ))}
+        {plans.length > 0 ? (
+          plans.map((plan, index) => (
+            <div key={plan.id} className="category-tile">
+              {getImageUrl(plan) && (
+                <img
+                  src={getImageUrl(plan)}
+                  alt={plan.policyName}
+                  className="category-img"
+                />
+              )}
+              <h3>{index + 1}. {plan.policyName}</h3>
+              <button
+                className="category-link"
+                onClick={() => handleViewPlan(plan.id)}
+              >
+                View Plan
+              </button>
+            </div>
+          ))
+        ) : (
+          <p>No plans available.</p>
+        )}
       </div>
     </section>
   );

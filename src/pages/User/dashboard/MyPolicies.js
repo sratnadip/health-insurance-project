@@ -3,16 +3,9 @@ import axios from 'axios';
 import './MyPolicies.css';
 import { Link } from 'react-router-dom';
 
-import individualImg from '../../../assets/individual.png';
-import familyImg from '../../../assets/family.png';
-import seniorImg from '../../../assets/senior.png';
-import criticalImg from '../../../assets/critical.png';
-import defaultImg from '../../../assets/default.png';
-
 export default function MyPolicies() {
   const [policies, setPolicies] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [plans, setPlans] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +27,6 @@ export default function MyPolicies() {
           `http://localhost:8089/user-policy/user/${userId}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
-
         const purchasedPolicies = purchasedRes.data;
 
         // Fetch all policy plans
@@ -42,14 +34,12 @@ export default function MyPolicies() {
           'http://localhost:8089/admin/policy-plans/all',
           { headers: { Authorization: `Bearer ${token}` } }
         );
-
         const allPlans = plansRes.data;
-        setPlans(allPlans);
 
-        
+        // Merge purchased policies with plan details
         const merged = purchasedPolicies.map(up => {
           const plan = allPlans.find(p => p.id === up.policyId);
-          return { ...up, plan };
+          return { ...up, plan, showInfo: false }; // track hover state
         });
 
         setPolicies(merged);
@@ -64,15 +54,6 @@ export default function MyPolicies() {
     fetchData();
   }, []);
 
-  const getPlanImage = (name = '') => {
-    const key = name.toLowerCase();
-    if (key.includes('family')) return familyImg;
-    if (key.includes('senior')) return seniorImg;
-    if (key.includes('critical')) return criticalImg;
-    if (key.includes('individual')) return individualImg;
-    return defaultImg;
-  };
-
   if (loading) return <p>Loading your policies...</p>;
 
   if (policies.length === 0)
@@ -85,6 +66,12 @@ export default function MyPolicies() {
       </div>
     );
 
+  const toggleInfo = (id) => {
+    setPolicies(prev =>
+      prev.map(p => p.id === id ? { ...p, showInfo: !p.showInfo } : p)
+    );
+  };
+
   return (
     <div className="policies-container">
       <h2 className="heading">My Purchased Policies</h2>
@@ -92,24 +79,32 @@ export default function MyPolicies() {
         {policies.map(policy => (
           <div key={policy.id} className={`policy-card ${policy.status.toLowerCase()}`}>
             <h3 className="policy-name">{policy.plan?.policyName || 'Unknown Plan'}</h3>
-            <img
-              src={getPlanImage(policy.plan?.policyName)}
-              alt={policy.plan?.policyName}
-              className="policy-img"
-            />
-            <div className="policy-info">
-              <p><strong>Status:</strong> {policy.status}</p>
-              <p><strong>Coverage:</strong> ₹{policy.plan?.coverage}</p>
-              <p><strong>Premium:</strong> ₹{policy.plan?.premium}</p>
-              <p><strong>Duration:</strong> {policy.plan?.durationInYears} years</p>
-              <p><strong>Start Date:</strong> {policy.startDate}</p>
-              <p><strong>End Date:</strong> {policy.endDate}</p>
-              {policy.nominee && (
-                <p>
-                  <strong>Nominee:</strong> {policy.nominee} ({policy.nomineeRelation})
-                </p>
-              )}
+            <div
+              className="image-wrapper"
+              onMouseEnter={() => toggleInfo(policy.id)}
+              onMouseLeave={() => toggleInfo(policy.id)}
+            >
+              <img
+                src={policy.plan?.imageUrl ? `http://localhost:8089/admin/policy-plans/view-image/${policy.plan.id}` : ''}
+                alt={policy.plan?.policyName}
+                className="policy-img"
+              />
             </div>
+            {policy.showInfo && (
+              <div className="policy-info">
+                <p><strong>Status:</strong> {policy.status}</p>
+                <p><strong>Coverage:</strong> ₹{policy.plan?.coverage}</p>
+                <p><strong>Premium:</strong> ₹{policy.plan?.premium}</p>
+                <p><strong>Duration:</strong> {policy.plan?.durationInYears} years</p>
+                <p><strong>Start Date:</strong> {policy.startDate}</p>
+                <p><strong>End Date:</strong> {policy.endDate}</p>
+                {policy.nominee && (
+                  <p>
+                    <strong>Nominee:</strong> {policy.nominee} ({policy.nomineeRelation})
+                  </p>
+                )}
+              </div>
+            )}
           </div>
         ))}
       </div>

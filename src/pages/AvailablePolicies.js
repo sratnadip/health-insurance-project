@@ -1,13 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
-import './AvailablePolicies.css';
-
-import individualImg from '../assets/individual.png';
-import familyImg from '../assets/family.png';
-import seniorImg from '../assets/senior.png';
-import criticalImg from '../assets/critical.png';
-import defaultImg from '../assets/default.png';
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import "./AvailablePolicies.css";
 
 export default function AvailablePolicies() {
   const { id } = useParams();
@@ -15,45 +9,29 @@ export default function AvailablePolicies() {
   const [policy, setPolicy] = useState(null);
   const [userId, setUserId] = useState(null);
   const [showNomineeForm, setShowNomineeForm] = useState(false);
-  const [nominee, setNominee] = useState('');
-  const [relation, setRelation] = useState('');
-
-  const getPlanImage = (plan = {}) => {
-    const type = plan.policyType?.toLowerCase() || "";
-    if (type.includes("family")) return familyImg;
-    if (type.includes("senior")) return seniorImg;
-    if (type.includes("child")) return criticalImg;
-    if (type.includes("individual")) return individualImg;
-    return defaultImg;
-  };
+  const [nominee, setNominee] = useState("");
+  const [relation, setRelation] = useState("");
 
   useEffect(() => {
     const authData = JSON.parse(localStorage.getItem("authData"));
     if (!authData || !authData.token) {
       alert("Please login to view policy details.");
-      navigate("/auth", { state: { redirectAfterLogin: `/available-policies/${id}` } });
+      navigate("/auth", {
+        state: { redirectAfterLogin: `/available-policies/${id}` },
+      });
       return;
     }
 
     setUserId(authData.userId);
 
-    axios.get("http://localhost:8089/admin/policy-plans/all", {
-      headers: { Authorization: `Bearer ${authData.token}` }
-    })
-    .then((res) => {
-      const clickedPolicy = res.data.find(p => (p.id).toString() === id);
-      if (clickedPolicy) {
-        setPolicy(clickedPolicy);
-      } else {
-        alert("Policy not found");
+    axios
+      .get(`http://localhost:8089/admin/policy-plans/${id}`)
+      .then((res) => setPolicy(res.data))
+      .catch((err) => {
+        console.error("Error fetching policy:", err);
+        alert("Unable to load policy details");
         navigate("/health-plans");
-      }
-    })
-    .catch((err) => {
-      console.error("Error fetching policy:", err);
-      alert("Something went wrong");
-      navigate("/health-plans");
-    });
+      });
   }, [id, navigate]);
 
   const handleBuyPolicy = async () => {
@@ -71,43 +49,42 @@ export default function AvailablePolicies() {
 
     try {
       await axios.post("http://localhost:8089/user-policy/purchase", payload);
-      alert("Policy purchased successfully!");
+      alert("✅ Policy purchased successfully!");
       navigate("/dashboard/policies");
     } catch (err) {
       console.error("Error buying policy:", err);
-      alert("Failed to buy policy");
+      alert("❌ Failed to buy policy");
     }
   };
 
-  if (!policy) return <p>Loading policy details...</p>;
+  if (!policy) return <p className="loading-text">Loading policy details...</p>;
 
   return (
     <div className="policy-details-container">
-     
       <h2 className="policy-name">{policy.policyName}</h2>
-      <div className="image-container">
-        <img
-          src={getPlanImage(policy)}
-          alt={policy.policyName}
-          className="policy-img"
-        />
+
+      <div className="policy-content">
+        <div className="image-container">
+          <img
+            src={`http://localhost:8089/admin/policy-plans/view-image/${policy.id}`}
+            alt={policy.policyName}
+            className="policy-img"
+          />
+        </div>
+
+        <div className="policy-info">
+          <p><strong>Type:</strong> {policy.policyType}</p>
+          <p><strong>Coverage:</strong> ₹{policy.coverage}</p>
+          <p><strong>Premium:</strong> ₹{policy.premium}</p>
+          <p><strong>Duration:</strong> {policy.durationInYears} years</p>
+        </div>
       </div>
 
-      {!showNomineeForm && (
-        <>
-          <button className="buy-btn" onClick={() => setShowNomineeForm(true)}>
-            Buy Policy
-          </button>
-          <div className="policy-info">
-            <p><strong>Type:</strong> {policy.policyType}</p>
-            <p><strong>Coverage:</strong> ₹{policy.coverage}</p>
-            <p><strong>Premium:</strong> ₹{policy.premium}</p>
-            <p><strong>Duration:</strong> {policy.durationInYears} years</p>
-          </div>
-        </>
-      )}
-
-      {showNomineeForm && (
+      {!showNomineeForm ? (
+        <button className="buy-btn" onClick={() => setShowNomineeForm(true)}>
+          Buy Policy
+        </button>
+      ) : (
         <div className="nominee-form">
           <h3>Nominee Details</h3>
           <input

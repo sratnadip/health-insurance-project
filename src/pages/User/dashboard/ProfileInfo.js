@@ -6,6 +6,12 @@ import {
   updateUserProfileApi,
 } from '../../../api/user/profileApi';
 
+
+import {
+  FaUser, FaEnvelope, FaLock, FaPhone, FaBirthdayCake, FaTransgender,
+  FaHome, FaBriefcase, FaTint, FaIdCard, FaHeart, FaAddressCard
+} from 'react-icons/fa';
+
 export default function ProfileInfo() {
   const [formData, setFormData] = useState({
     id: '',
@@ -34,7 +40,6 @@ export default function ProfileInfo() {
       return;
     }
     setUserId(authData.userId);
-
     fetchUserProfile(authData.userId, authData.token);
   }, []);
 
@@ -80,6 +85,23 @@ export default function ProfileInfo() {
     }
   };
 
+  
+  const icons = {
+    name: <FaUser />,
+    email: <FaEnvelope />,
+    password: <FaLock />,
+    phone: <FaPhone />,
+    dob: <FaBirthdayCake />,
+    gender: <FaTransgender />,
+    correspondenceAddress: <FaHome />,
+    permanentAddress: <FaAddressCard />,
+    maritalStatus: <FaHeart />,
+    occupation: <FaBriefcase />,
+    bloodGroup: <FaTint />,
+    emergencyContact: <FaPhone />,
+    aadhaarNumber: <FaIdCard />,
+  };
+
   const formatLabel = (key) =>
     key.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase());
 
@@ -87,7 +109,8 @@ export default function ProfileInfo() {
     if (key === 'dob') return 'date';
     if (key === 'email') return 'email';
     if (key === 'password') return 'password';
-    if (key === 'phone' || key === 'emergencyContact') return 'tel';
+    if (key === 'phone' || key === 'emergencyContact' || key === 'aadhaarNumber')
+      return 'tel';
     return 'text';
   };
 
@@ -101,13 +124,16 @@ export default function ProfileInfo() {
               key !== 'id' && key !== 'user' ? (
                 <div className="form-group" key={key}>
                   <label>{formatLabel(key)}</label>
-                  <input
-                    type={getInputType(key)}
-                    name={key}
-                    value={value || ''}
-                    onChange={handleChange}
-                    required
-                  />
+                  <div className="input-with-icon">
+                    <span className="icon">{icons[key]}</span>
+                    <input
+                      type={getInputType(key)}
+                      name={key}
+                      value={value || ''}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
                 </div>
               ) : null
             )}
@@ -123,7 +149,9 @@ export default function ProfileInfo() {
               {Object.entries(formData).map(([key, value]) =>
                 key !== 'id' && key !== 'user' ? (
                   <tr key={key}>
-                    <td className="profile-label">{formatLabel(key)}</td>
+                    <td className="profile-label">
+                      {icons[key]} {formatLabel(key)}
+                    </td>
                     <td>{value}</td>
                   </tr>
                 ) : null

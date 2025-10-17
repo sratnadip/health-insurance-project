@@ -1,42 +1,56 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './Faqs.css'; 
+import React, { useEffect, useState } from "react";
+import "./Faqs.css";
 
-export default function Faqs() {
+export default function FAQs() {
   const [faqs, setFaqs] = useState([]);
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [openIndex, setOpenIndex] = useState(null); 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Fetch FAQs from backend
   useEffect(() => {
     const fetchFaqs = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/faq/all'); // adjust backend URL if needed
-        setFaqs(response.data);
-      } catch (error) {
-        console.error('Error fetching FAQs:', error);
+        const response = await fetch("http://localhost:8089/faq/all");
+        if (!response.ok) throw new Error("Failed to fetch FAQs");
+        const data = await response.json();
+        setFaqs(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
       }
     };
     fetchFaqs();
   }, []);
- 
-  const toggle = (index) => {
-    setActiveIndex(index === activeIndex ? null : index);
+
+  const toggleFAQ = (index) => {
+    setOpenIndex(openIndex === index ? null : index); 
   };
-  
+
+  if (loading) return <div className="faq-container">Loading FAQs...</div>;
+  if (error) return <div className="faq-container error">Error: {error}</div>;
+
   return (
-    <div className="faq-section">
-      <h2>Frequently Asked Questions</h2>
+    <div className="faq-container">
+      <h2 className="faq-heading">Frequently Asked Questions</h2>
       {faqs.map((faq, index) => (
-        <div
-          key={faq.id || index}
-          className={`faq-item ${activeIndex === index ? 'active' : ''}`}
-          onClick={() => toggle(index)}
-        >
-          <div className="faq-question">
-            <span>{`${index + 1}. ${faq.question}`}</span>
-            <span className="faq-toggle">{activeIndex === index ? '–' : '+'}</span>
+        <div key={faq.id} className="faq-card">
+          <div
+            className="faq-question"
+            onClick={() => toggleFAQ(index)}
+          >
+            <span className="faq-number">{index + 1}.</span>{" "}
+            {faq.question}
+            <span className="faq-icon">{openIndex === index ? "−" : "+"}</span>
           </div>
-          {activeIndex === index && <div className="faq-answer">{faq.answer}</div>}
+          {openIndex === index && (
+            <div
+  className={`faq-answer ${openIndex === index ? "open" : ""}`}
+>
+  {faq.answer}
+</div>
+
+          )}
         </div>
       ))}
     </div>

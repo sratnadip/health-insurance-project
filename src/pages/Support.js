@@ -1,4 +1,6 @@
-import './Support.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import "./Support.css";
 
 export default function Support() {
   return (
@@ -7,6 +9,14 @@ export default function Support() {
       <p>Call us at: <strong>1800-123-4567</strong></p>
       <p>Email: <strong>support@qsthealth.com</strong></p>
       <p>Live chat support is available in the bottom-right corner.</p>
+
+      <hr className="divider" />
+
+      <div className="agent-btn-container">
+        <Link to="/register-agent">
+          <button className="register-btn">Register as Agent</button>
+        </Link>
+      </div>
     </div>
   );
 }

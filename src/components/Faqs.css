@@ -1,67 +1,66 @@
-.faq-section {
-  background-color: #f9f9f9;
-  padding: 30px 20px;
-  border-radius: 12px;
-  margin: 40px auto;
+.faq-container {
+  padding: 20px;
   max-width: 800px;
-  text-align: left;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  font-family: 'Segoe UI', sans-serif;
+  margin: 0 auto;
 }
 
-.faq-section h2 {
+.faq-heading {
   text-align: center;
-  color: #0077cc;
-  margin-bottom: 20px;
-  font-size: 28px;
+  color: #003366;
+  margin-bottom: 25px;
 }
 
-.faq-item {
-  border-bottom: 1px solid #ddd;
-  padding: 15px 10px;
+.faq-card {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
-  overflow: hidden;
-}
-
-.faq-item:hover {
-  background-color: #f1f1f1;
-  transform: scale(1.01);
 }
 
 .faq-question {
+  font-weight: 600;
+  color: #0077cc;
   display: flex;
   justify-content: space-between;
-  font-weight: bold;
-  font-size: 16px;
-  color: #333;
-  transition: color 0.3s ease;
+  align-items: center;
 }
 
-.faq-toggle {
-  font-size: 22px;
-  color: #007bff;
-  margin-left: 10px;
+.faq-number {
+  margin-right: 10px;
+}
+
+.faq-icon {
+  font-weight: bold;
+  font-size: 20px;
   transition: transform 0.3s ease;
 }
-
-.faq-item.active .faq-toggle {
-  transform: rotate(180deg);
-}
-
 .faq-answer {
-  max-height: 0;
+  margin-top: 10px;
+  margin-left: 25px; 
+  color: #333;
+  line-height: 1.5;
+  max-height: 0; 
   overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.4s ease, opacity 0.3s ease;
-  font-size: 14px;
-  color: #555;
-  line-height: 1.6;
-  margin-top: 0;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  padding: 0 0; 
 }
 
-.faq-item.active .faq-answer {
-  max-height: 500px; /* big enough to fit most content */
-  opacity: 1;
-  margin-top: 10px;
+.faq-answer.open {
+  max-height: 500px; 
+  padding: 10px 0; 
+}
+
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.error {
+  color: red;
+  text-align: center;
 }

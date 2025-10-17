@@ -1,7 +1,7 @@
 .profile-container {
   max-width: 900px;
   margin: 60px auto;
-  padding: 30px 40px;
+  padding: 0px 20px;
   background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -89,7 +89,7 @@
 
 .profile-view .profile-label {
   font-weight: 600;
-  color: #003366;
+  color: #1d4390;
   width: 40%;
   background-color: #f8f9fa;
   border-right: 1px solid #e0e0e0;
@@ -109,3 +109,41 @@
     width: 45%;
   }
 }
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #5963b0;
+  font-size: 16px;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding: 10px 10px 10px 35px; 
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+}
+
+.input-with-icon input:focus {
+  border-color: #290b4f;
+  box-shadow: 0 0 4px rgba(41, 11, 79, 0.3);
+}
+
+.profile-label svg {
+  vertical-align: middle;
+  margin-right: 6px;
+  color: #290b4f;
+}
+

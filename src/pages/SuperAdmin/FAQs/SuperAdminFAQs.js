@@ -28,7 +28,7 @@ export default function SuperAdminFAQs() {
 
   useEffect(() => { fetchFAQs(); }, []);
 
-  // Add / Update FAQ
+  // Add /Update FAQ
   const handleSave = async () => {
     try {
       if (editId) {
@@ -70,7 +70,7 @@ export default function SuperAdminFAQs() {
     <div style={{ display: "flex", minHeight: "100vh", backgroundColor: "#f5f7fa" }}>
       <SuperAdminSidebar />
       <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-        {/* ✅ Navbar with Profile + Logout */}
+        {/*  Navbar with Profile + Logout */}
         <SuperAdminNavbar />
 
         <div style={{ padding: "20px 40px" }}>

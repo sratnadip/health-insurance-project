@@ -11,14 +11,17 @@ export default function UserDashboard() {
   return (
     <div className="user-dashboard-container">
       <UserSidebar />
-      <div className="user-dashboard-content">
-        <Routes>
-          <Route path="profile" element={<ProfileInfo />} />
-          <Route path="appointments" element={<MyAppointments />} />
-          <Route path="policies" element={<MyPolicies />} />
-          <Route path="documents" element={<MyDocuments />} />
-          <Route path="claims" element={<MyClaims />} /> 
-        </Routes>
+      <div className="user-dashboard-main">
+        <h1 className="dashboard-heading">User Dashboard</h1>
+        <div className="user-dashboard-content">
+          <Routes>
+            <Route path="profile" element={<ProfileInfo />} />
+            <Route path="appointments" element={<MyAppointments />} />
+            <Route path="policies" element={<MyPolicies />} />
+            <Route path="documents" element={<MyDocuments />} />
+            <Route path="claims" element={<MyClaims />} /> 
+          </Routes>
+        </div>
       </div>
     </div>
   );
