@@ -1,10 +1,10 @@
-// src/pages/SuperAdmin/Admins/SuperAdminAdmins.js
 import React, { useState } from "react";
 import { Tabs, Tab, Box, Typography } from "@mui/material";
 import SuperAdminSidebar from "../SuperAdminSidebar";
 import SuperAdminNavbar from "../SuperAdminNavbar";
 import AdminList from "./AdminList";
 import AdminApprovals from "./AdminApprovals";
+import AdminRegistration from "./AdminRegistration"; // <-- New import
 
 export default function SuperAdminAdmins() {
   const [activeTab, setActiveTab] = useState(0);
@@ -29,11 +29,15 @@ export default function SuperAdminAdmins() {
           >
             <Tab label="📋 Admin List" />
             <Tab label="✅ Admin Approvals" />
+            <Tab label="📝 Admin Registration" /> {/* New tab */}
           </Tabs>
 
-          <Box sx={{ background: "#fff", borderRadius: "8px", p: 3, minHeight: "400px" }}>
+          <Box
+            sx={{ background: "#fff", borderRadius: "8px", p: 3, minHeight: "400px" }}
+          >
             {activeTab === 0 && <AdminList />}
             {activeTab === 1 && <AdminApprovals />}
+            {activeTab === 2 && <AdminRegistration />} {/* New tab content */}
           </Box>
         </div>
       </div>
