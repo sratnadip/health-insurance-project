@@ -108,10 +108,7 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid OTP");
         }
 
-        // Clear OTP after login
-        admin.setOtp(null);
         adminService.save(admin);
-
         String token = jwtUtil.generateToken(admin.getEmail(), admin.getRole().name());
 
         Map<String, Object> response = new HashMap<>();
