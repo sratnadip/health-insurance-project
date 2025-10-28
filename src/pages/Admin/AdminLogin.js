@@ -1,38 +1,28 @@
 import React, { useState } from "react";
 import "./AdminLogin.css";
 import { login, verifyOtp } from "../AdminAPI/AdminLoginAPI";
-import { useNavigate, Link } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({ email: "", password: "", otp: "" });
+  const [formData, setFormData] = useState({ email: "", otp: "" });
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  // Step 1: Login and send OTP
-  const handleLogin = async (e) => {
+  // Step 1: Send OTP
+  const handleSendOtp = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await login(formData.email, formData.password);
-
-      if (res.token && res.role === "SUPER_ADMIN") {
-        sessionStorage.setItem("adminId", res.id || "1");
-        sessionStorage.setItem("adminRole", res.role);
-        sessionStorage.setItem("adminToken", res.token);
-        sessionStorage.setItem("adminUsername", res.username || "SuperAdmin");
-        
-        setTimeout(() => navigate("/admin/dashboard"), 500);
-        return;
-      }
-
-      window.alert("OTP sent to your email");
+      await login(formData.email);
+      window.alert("OTP has been sent to your registered email.");
       setStep(2);
     } catch (err) {
       console.error(err);
-      window.alert(err.response?.data?.message || "Login failed");
+      window.alert(err.response?.data?.message || "Failed to send OTP");
     } finally {
       setLoading(false);
     }
@@ -43,14 +33,21 @@ export default function AdminLogin() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await verifyOtp(formData.email, formData.otp, formData.password);
+      const res = await verifyOtp(formData.email, formData.otp);
 
+     
       sessionStorage.setItem("adminId", res.id);
       sessionStorage.setItem("adminRole", res.role);
       sessionStorage.setItem("adminToken", res.token);
       sessionStorage.setItem("adminUsername", res.username);
-      
-      setTimeout(() => navigate("/admin/dashboard/"), 500);
+      sessionStorage.setItem("adminProfileId", res.profileId);
+
+      console.log("Session Storage after login:", {
+        adminId: sessionStorage.getItem("adminId"),
+        adminProfileId: sessionStorage.getItem("adminProfileId"),
+      });
+
+      setTimeout(() => navigate("/admin/dashboard"), 500);
     } catch (err) {
       console.error(err);
       window.alert(err.response?.data?.message || "Invalid OTP");
@@ -62,23 +59,19 @@ export default function AdminLogin() {
   return (
     <div className="auth-page2">
       <div className="auth-form2">
+        <button className="close-btn" onClick={() => navigate("/")} title="Go to Home">
+          ✖
+        </button>
+
         <h2>{step === 1 ? "Admin Login" : "Verify OTP"}</h2>
 
         {step === 1 && (
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleSendOtp}>
             <input
               type="email"
               name="email"
-              placeholder="Admin Email"
+              placeholder="Enter Admin Email"
               value={formData.email}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
               onChange={handleChange}
               required
             />
@@ -97,14 +90,7 @@ export default function AdminLogin() {
               value={formData.email}
               onChange={handleChange}
               required
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              required
+              readOnly
             />
             <input
               type="text"
@@ -118,15 +104,6 @@ export default function AdminLogin() {
               {loading ? "Verifying..." : "Verify OTP"}
             </button>
           </form>
-        )}
-
-        {step === 1 && (
-          <p className="auth-message2">
-            Don't have an account?{" "}
-            <Link to="/Admin/AdminRegister" className="Register-link">
-              Register
-            </Link>
-          </p>
         )}
       </div>
     </div>

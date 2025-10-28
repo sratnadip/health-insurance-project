@@ -1,16 +1,19 @@
+/* ---------- Page Background ---------- */
 .auth-page2 {
-  background-image: url('../../assets//AdminRegister.png'); 
-  background-size: 100%;        /* smaller image */
-  background-position: right top;  /* top right corner */
+  background-image: url('../../assets/AdminRegister.png'); 
+  background-size: 100%;        
+  background-position: right top; 
   background-repeat: no-repeat;
-  background-color: #f5f7fa;  /* light background for contrast */
+  background-color: #f5f7fa;  
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
+  position: relative;
 }
 
+/* ---------- Form Container ---------- */
 .auth-form2 {
   background: rgba(255, 255, 255, 0.95);
   padding: 40px 35px;
@@ -19,9 +22,35 @@
   width: 100%;
   box-shadow: 0 10px 30px rgba(0,0,0,0.15);
   text-align: center;
+  position: relative;
   animation: fadeIn 0.6s ease;
 }
 
+/* ---------- Small Top-Right Cross Button ---------- */
+.auth-form2 .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #ccc;
+  color: #333;
+  border: none;
+  font-size: 18px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  line-height: 28px;
+  text-align: center;
+  padding: 0;
+  transition: background 0.2s ease;
+}
+
+.auth-form2 .close-btn:hover {
+  background: #999;
+  color: white;
+}
+
+/* ---------- Headings ---------- */
 .auth-form2 h2 {
   margin-bottom: 28px;
   font-size: 28px;
@@ -29,6 +58,7 @@
   font-weight: 600;
 }
 
+/* ---------- Inputs ---------- */
 .auth-form2 input {
   width: 100%;
   padding: 12px 14px;
@@ -45,7 +75,8 @@
   box-shadow: 0 0 5px rgba(25, 118, 210, 0.4);
 }
 
-.auth-form2 button {
+/* ---------- Buttons ---------- */
+.auth-form2 button[type="submit"] {
   width: 100%;
   padding: 12px;
   background-color: #1976d2;
@@ -57,24 +88,25 @@
   transition: all 0.3s ease;
 }
 
-.auth-form2 button:hover {
+.auth-form2 button[type="submit"]:hover {
   background-color: #0d47a1;
   transform: translateY(-2px);
 }
 
+/* ---------- Message ---------- */
 .auth-message2 {
   margin-top: 14px;
   color: #1565c0;
   font-weight: 500;
 }
 
-/* Fade-in animation */
+/* ---------- Fade-in Animation ---------- */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Responsive */
+/* ---------- Responsive ---------- */
 @media (max-width: 480px) {
   .auth-form2 {
     padding: 30px 20px;

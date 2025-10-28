@@ -12,7 +12,7 @@ import UserDashboard from "./pages/User/dashboard/UserDashboard";
 import { AuthProvider } from "./context/AuthContext";
 
 // Admin Pages
-import AdminRegister from "./pages/Admin/AdminRegister";
+
 import AdminLogin from "./pages/Admin/AdminLogin";
 import AdminDashboard from "./pages/Admin/AdminDashboard"; 
 
@@ -36,7 +36,6 @@ function App() {
     "/superadmin/dashboard",
     "/admin/login",
     "/admin/dashboard",
-    "/Admin/AdminRegister",
     "/dashboard"
   ];
 
@@ -78,7 +77,7 @@ function App() {
         <Route path="/available-policies/:id" element={<AvailablePolicies />} />
 
         {/*  Admin Routes */}
-        <Route path="/Admin/AdminRegister" element={<AdminRegister />} />
+       
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/dashboard/*" element={<AdminDashboard />} />
 

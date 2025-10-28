@@ -27,9 +27,9 @@ export default function AdminSidebar() {
             style={({ isActive }) => ({
               ...styles.link,
               background: isActive
-                ? "linear-gradient(135deg, rgba(63, 117, 243, 0.44), rgba(64, 41, 235, 1))"
-                : "#fff",
-              color: isActive ? "#fff" : "#000000ff",
+                ? "linear-gradient(135deg, hsla(242, 90%, 37%, 0.44), rgba(64, 41, 235, 1))"
+                : "rgba(59, 33, 206, 1)",
+              color: isActive ? "hsla(245, 14%, 85%, 1.00)" : "rgba(244, 240, 240, 1)",
               boxShadow: isActive
                 ? "0 4px 12px rgba(0,0,0,0.15)"
                 : "0 2px 6px rgba(0,0,0,0.05)",
@@ -54,7 +54,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     padding: "20px 10px",
-    background: "linear-gradient(180deg, #f0f4f8, #d9e2ec)",
+    background: "linear-gradient(180deg, rgba(235, 237, 238, 1), #d9e2ec)",
     boxShadow: "2px 0 15px rgba(0,0,0,0.08)",
     zIndex: 100,
   },

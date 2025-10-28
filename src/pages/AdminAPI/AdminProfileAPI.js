@@ -8,7 +8,7 @@ export const saveAdminProfile = async (data) => {
     headers: { "Content-Type": "application/json" },
   });
   return res.data;
-};
+};   
 
 // Update profile
 export const updateAdminProfile = async (id, data) => {
