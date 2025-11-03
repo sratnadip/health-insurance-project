@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import SuperAdminSidebar from "../SuperAdminSidebar";
 import SuperAdminNavbar from "../SuperAdminNavbar";
-import ViewProfile from "./ViewProfile"; // Import the ViewProfile component
+
 
 const API_BASE_USERS = "http://localhost:8089/api/v1";
 
@@ -14,8 +14,8 @@ export default function SuperAdminUsers() {
   const [editingUser, setEditingUser] = useState(null);
   const [formData, setFormData] = useState({ userName: "", email: "", password: "" });
 
-  const [showProfile, setShowProfile] = useState(false);
-  const [profileUserId, setProfileUserId] = useState(null);
+  // const [showProfile, setShowProfile] = useState(false);
+  // const [profileUserId, setProfileUserId] = useState(null);
 
   // Fetch all users
   const fetchUsers = async () => {
@@ -78,10 +78,10 @@ export default function SuperAdminUsers() {
   };
 
   // View user profile
-  const viewProfile = (userId) => {
-    setProfileUserId(userId);
-    setShowProfile(true);
-  };
+  // const viewProfile = (userId) => {
+  //   setProfileUserId(userId);
+  //   setShowProfile(true);
+  // };
 
   return (
     <div style={{ display: "flex", minHeight: "100vh" }}>
@@ -136,7 +136,7 @@ export default function SuperAdminUsers() {
                           justifyContent: "center",
                         }}
                       >
-                        <button
+                        {/* <button
                           onClick={() => viewProfile(u.userId)}
                           style={{
                             background: "#2196f3",
@@ -148,7 +148,7 @@ export default function SuperAdminUsers() {
                           }}
                         >
                           👁 View
-                        </button>
+                        </button> */}
                         <button
                           onClick={() => openModal(u)}
                           style={{
@@ -263,12 +263,12 @@ export default function SuperAdminUsers() {
           )}
 
           {/* Profile Modal */}
-          {showProfile && profileUserId && (
+          {/* {showProfile && profileUserId && (
             <ViewProfile
               userId={profileUserId}
               onClose={() => setShowProfile(false)}
             />
-          )}
+          )} */}
         </div>
       </div>
     </div>

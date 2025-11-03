@@ -17,48 +17,80 @@ export default function SuperAdminDashboard() {
     policies: 0,
   });
   const [loading, setLoading] = useState(true);
+  // const [refreshing, setRefreshing] = useState(false);
   const navigate = useNavigate();
 
-  // ✅ Fetch user count
   const fetchUsersCount = async () => {
     try {
-      const res = await fetch("http://localhost:8080/api/v1");
+      const res = await fetch("http://localhost:8089/api/v1"); 
       if (!res.ok) throw new Error(`Failed to fetch users: ${res.status}`);
-
       const data = await res.json();
-      console.log("User API response:", data);
-
       return Array.isArray(data) ? data.length : 0;
-    } catch (err) {
+    } catch (err) {        
       console.error("Error fetching users:", err);
       return 0;
     }
   };
 
-  // ✅ Fetch all dashboard stats
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const [admins, pending, usersCount] = await Promise.all([
-          fetchAllAdmins(),
-          fetchPendingAdmins(),
-          fetchUsersCount(),
-        ]);
-
-        setStats({
-          users: usersCount,
-          admins: admins.length,
-          pending: pending.length,
-          policies: 25,
-        });
-      } catch (error) {
-        console.error("Error fetching stats:", error);
-      } finally {
-        setLoading(false);
+  const fetchAdminsCount = async () => {
+    try {
+      const admins = await fetchAllAdmins(); 
+      if (!Array.isArray(admins)) {
+        console.warn("fetchAllAdmins returned non-array:", admins);
+        return 0;
       }
-    };
-    fetchStats();
+      return admins.length;
+    } catch (err) {
+      console.error("Error fetching admins via fetchAllAdmins:", err);
+      return 0;
+    }
+  };
+
+  // Fetch pending approvals count using existing helper
+  const fetchPendingCount = async () => {
+    try {
+      const pending = await fetchPendingAdmins();
+      return Array.isArray(pending) ? pending.length : 0;
+    } catch (err) {
+      console.error("Error fetching pending admins:", err);
+      return 0;
+    }
+  };
+
+  // master fetch
+  const loadStats = async () => {
+    setLoading(true);
+    try {
+      const [adminsCount, pendingCount, usersCount] = await Promise.all([
+        fetchAdminsCount(),
+        fetchPendingCount(),
+        fetchUsersCount(),
+      ]);
+
+      setStats({
+        users: usersCount,
+        admins: adminsCount,
+        pending: pendingCount,
+        policies: 0,
+      });
+    } catch (err) {
+      console.error("Error loading stats:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadStats();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // // Manual refresh handler (useful while debugging)
+  // const handleRefresh = async () => {
+  //   setRefreshing(true);
+  //   await loadStats();
+  //   setRefreshing(false);
+  // };
 
   return (
     <div style={styles.layout}>
@@ -67,12 +99,32 @@ export default function SuperAdminDashboard() {
         <SuperAdminNavbar />
 
         <div style={styles.content}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <h2>Welcome, Super Admin! </h2>
+            
+            {/* <div>
+              <button
+                onClick={handleRefresh}
+                style={{
+                  background: "#1976d2",
+                  color: "#fff",
+                  border: "none",
+                  padding: "8px 12px",
+                  borderRadius: "6px",
+                  cursor: "pointer",
+                }}
+                disabled={refreshing}
+              >
+                {refreshing ? "Refreshing..." : "Refresh Counts"}
+              </button>
+            </div> */}
+          </div>
+
           <Routes>
             <Route
               path="/"
               element={
                 <div>
-                  <h2>Welcome, Super Admin!</h2>
                   {loading ? (
                     <p>Loading stats...</p>
                   ) : (
@@ -94,21 +146,22 @@ export default function SuperAdminDashboard() {
                       <div
                         style={styles.card}
                         onClick={() =>
-                          navigate("/superadmin/dashboard/admins")
+                          navigate("/superadmin/dashboard/policies")
                         }
                       >
-                        <h3>Pending Approvals</h3>
+                        {/* <h3>Pending Approvals</h3>
                         <p>{stats.pending}</p>
                       </div>
                       <div
                         style={styles.card}
                         onClick={() =>
-                          navigate("/superadmin/dashboard/policies")
+                          // navigate("/superadmin/dashboard/policies")
                         }
-                      >
+                      > */}
                         <h3>Total Policies</h3>
                         <p>{stats.policies}</p>
                       </div>
+                      
                     </div>
                   )}
                 </div>
@@ -132,6 +185,9 @@ export default function SuperAdminDashboard() {
     </div>
   );
 }
+
+
+
 const styles = {
   layout: {
     display: "flex",
@@ -151,7 +207,7 @@ const styles = {
     flex: 1,
     padding: "20px",
     background: "#f4f6f8",
-    overflowX: "auto",  // enables horizontal scroll for wide tables
+    overflowX: "auto", 
     overflowY: "auto",
   },
 

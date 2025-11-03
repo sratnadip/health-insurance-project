@@ -3,8 +3,8 @@ import { Tabs, Tab, Box, Typography } from "@mui/material";
 import SuperAdminSidebar from "../SuperAdminSidebar";
 import SuperAdminNavbar from "../SuperAdminNavbar";
 import AdminList from "./AdminList";
-import AdminApprovals from "./AdminApprovals";
-import AdminRegistration from "./AdminRegistration"; // <-- New import
+import AdminDetails from "./AdminDetails";
+import AdminRegistration from "./AdminRegistration"; 
 
 export default function SuperAdminAdmins() {
   const [activeTab, setActiveTab] = useState(0);
@@ -28,16 +28,16 @@ export default function SuperAdminAdmins() {
             sx={{ mb: 3 }}
           >
             <Tab label="📋 Admin List" />
-            <Tab label="✅ Admin Approvals" />
-            <Tab label="📝 Admin Registration" /> {/* New tab */}
+            <Tab label="✅ Admin Details" />
+            <Tab label="📝 Admin Registration" /> 
           </Tabs>
 
           <Box
             sx={{ background: "#fff", borderRadius: "8px", p: 3, minHeight: "400px" }}
           >
             {activeTab === 0 && <AdminList />}
-            {activeTab === 1 && <AdminApprovals />}
-            {activeTab === 2 && <AdminRegistration />} {/* New tab content */}
+            {activeTab === 1 && <AdminDetails />}
+            {activeTab === 2 && <AdminRegistration />} 
           </Box>
         </div>
       </div>
