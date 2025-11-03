@@ -5,18 +5,18 @@ import { useNavigate } from "react-router-dom";
 import "../../pages/Admin/AdminProfile.css";
 import {
   saveAdminProfile,
-  getAdminProfile,
   updateAdminProfile,
+  getAdminProfileByAdminId,
 } from "../AdminAPI/AdminProfileAPI";
 
 export default function AdminProfileForm() {
-  const navigate = useNavigate(); 
-  const [mode, setMode] = useState("loading"); // "loading", "create", "view", "edit"
+  const navigate = useNavigate();
+  const [mode, setMode] = useState("loading");
   const [profileId, setProfileId] = useState(null);
   const adminId = sessionStorage.getItem("adminId");
   const profileKey = `profileId_${adminId}`;
 
-  // ✅ Field icons
+  // ✅ Icons for each field
   const fieldIcons = {
     name: "👤",
     email: "📧",
@@ -36,51 +36,78 @@ export default function AdminProfileForm() {
     pinCode: "🔢",
   };
 
-  // ✅ Validation schema
+  // ✅ Validation Schema
   const validationSchema = Yup.object({
     name: Yup.string()
-      .matches(/^[A-Za-z\s]+$/, "Name must contain only letters")
+      .trim()
+      .matches(/^[A-Za-z\s]+$/, "Name can only contain letters")
+      .min(3, "Name must be at least 3 characters")
       .required("Name is required"),
-    email: Yup.string().email("Invalid email format").required("Email is required"),
+
+    email: Yup.string()
+      .trim()
+      .email("Enter a valid email address (e.g., abc@example.com)")
+      .required("Email is required"),
+
     password: Yup.string()
-      .min(8, "Password must be at least 8 characters long")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-        "Password must contain uppercase, lowercase, number, and special character"
-      )
-      .required("Password is required"),
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters")
+      .max(20, "Password must be less than 20 characters")
+      .matches(/[A-Z]/, "Must contain at least one uppercase letter")
+      .matches(/[a-z]/, "Must contain at least one lowercase letter")
+      .matches(/\d/, "Must contain at least one number")
+      .matches(/[@$!%*?&]/, "Must contain at least one special character"),
+
     phoneNumber: Yup.string()
-      .matches(/^[6-9]\d{9}$/, "Enter a valid 10-digit mobile number")
-      .required("Phone number is required"),
+      .required("Phone number is required")
+      .matches(/^[6-9]\d{9}$/, "Enter a valid 10-digit Indian phone number"),
+
     dateOfBirth: Yup.date()
-      .max(new Date(), "Date of Birth cannot be in the future")
-      .required("Date of Birth is required"),
-    companyName: Yup.string().required("Company name is required"),
-    companyType: Yup.string().required("Company type is required"),
+      .required("Date of birth is required")
+      .max(new Date(), "Date of birth cannot be in the future")
+      .test("age-limit", "Admin must be at least 18 years old", function (value) {
+        if (!value) return false;
+        const today = new Date();
+        const age = today.getFullYear() - value.getFullYear();
+        return age >= 18;
+      }),
+
+    companyName: Yup.string()
+      .trim()
+      .min(2, "Company name must be at least 2 characters")
+      .required("Company name is required"),
+
+    companyType: Yup.string()
+      .trim()
+      .min(2, "Company type must be at least 2 characters")
+      .required("Company type is required"),
+
     panNumber: Yup.string()
+      .trim()
       .matches(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, "Invalid PAN format (e.g., ABCDE1234F)")
       .required("PAN number is required"),
+
     gstNumber: Yup.string()
+      .trim()
       .matches(
-        /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
+        /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]Z[0-9A-Z]$/,
         "Invalid GST format (e.g., 27ABCDE1234F1Z5)"
       )
       .required("GST number is required"),
-    headOfficeAddress: Yup.string().required("Head Office Address is required"),
-    correspondenceAddress: Yup.string().required("Correspondence Address is required"),
-    permanentAddress: Yup.string().required("Permanent Address is required"),
-    city: Yup.string()
-      .matches(/^[A-Za-z\s]+$/, "City must contain only letters")
-      .required("City is required"),
-    state: Yup.string()
-      .matches(/^[A-Za-z\s]+$/, "State must contain only letters")
-      .required("State is required"),
-    country: Yup.string()
-      .matches(/^[A-Za-z\s]+$/, "Country must contain only letters")
-      .required("Country is required"),
-    pinCode: Yup.string()
-      .matches(/^[1-9][0-9]{5}$/, "Enter a valid 6-digit PIN code")
-      .required("Pincode is required"),
+
+    headOfficeAddress: Yup.string().trim().required("Head office address is required"),
+
+    correspondenceAddress: Yup.string().trim().required("Correspondence address is required"),
+
+    permanentAddress: Yup.string().trim().required("Permanent address is required"),
+
+    city: Yup.string().trim().required("City is required"),
+
+    state: Yup.string().trim().required("State is required"),
+
+    country: Yup.string().trim().required("Country is required"),
+
+    pinCode: Yup.string().trim().required("PIN code is required"),
   });
 
   // ✅ Formik setup
@@ -110,14 +137,12 @@ export default function AdminProfileForm() {
         return;
       }
 
-      const payload = { ...values, admin: { id: parseInt(adminId, 10) } };
-
       try {
         if (mode === "edit" && profileId) {
-          await updateAdminProfile(profileId, payload);
+          await updateAdminProfile(profileId, values);
           alert("Profile Updated Successfully!");
         } else {
-          const res = await saveAdminProfile(payload);
+          const res = await saveAdminProfile(adminId, values);
           if (res.id) {
             sessionStorage.setItem(profileKey, res.id);
             setProfileId(res.id);
@@ -127,46 +152,21 @@ export default function AdminProfileForm() {
         fetchProfile();
       } catch (err) {
         console.error("Error saving profile:", err);
-        alert("Failed to save profile.");
+        alert("Failed to save profile. Please check input or server.");
       }
     },
   });
 
-  // ✅ Fetch profile data
+  // ✅ Fetch Profile by Admin ID
   const fetchProfile = async () => {
-    if (!adminId) {
-      setMode("create");
-      return;
-    }
-
-    let storedProfileId = sessionStorage.getItem(profileKey);
-    if (!storedProfileId) {
-      setMode("create");
-      return;
-    }
-
     try {
-      const data = await getAdminProfile(storedProfileId);
-      if (data) {
-        setProfileId(data.id);
-        formik.setValues({
-          name: data.name || "",
-          email: data.email || "",
-          password: data.password || "",
-          phoneNumber: data.phoneNumber || "",
-          dateOfBirth: data.dateOfBirth || "",
-          companyName: data.companyName || "",
-          companyType: data.companyType || "",
-          panNumber: data.panNumber || "",
-          gstNumber: data.gstNumber || "",
-          headOfficeAddress: data.headOfficeAddress || "",
-          correspondenceAddress: data.correspondenceAddress || "",
-          permanentAddress: data.permanentAddress || "",
-          city: data.city || "",
-          state: data.state || "",
-          country: data.country || "",
-          pinCode: data.pinCode || "",
-        });
+      const data = await getAdminProfileByAdminId(adminId);
+      if (data && data.id) {
+        // Remove id field before setting form values
+        const { id, ...profileData } = data;
+        setProfileId(id);
+        sessionStorage.setItem(profileKey, id);
+        formik.setValues({ ...formik.initialValues, ...profileData });
         setMode("view");
       } else {
         setMode("create");
@@ -179,70 +179,60 @@ export default function AdminProfileForm() {
 
   useEffect(() => {
     fetchProfile();
-  }, [adminId]); // eslint-disable-line
+  }, [adminId]);
 
-  // ✅ Loading State
   if (mode === "loading") return <p>Loading...</p>;
 
-  // ✅ View Mode
-  if (mode === "view") {
-    const values = formik.values;
+  // ✅ VIEW MODE (Hide id field)
+  if (mode === "view")
     return (
       <div className="profile-overlay">
         <div className="form-container">
-          {/* ✖ Close Button */}
-          <button
-            className="close-btn"
-            onClick={() => navigate("/admin/dashboard")}
-            title="Go to Dashboard"
-          >
+          <button className="close-btn" onClick={() => navigate("/admin/dashboard")}>
             ✖
           </button>
-
           <h2>Admin Profile</h2>
           <table className="profile-table">
             <tbody>
-              {Object.keys(formik.initialValues).map((field) => (
-                <tr key={field}>
-                  <td className="field-name">
-                    {fieldIcons[field]}{" "}
-                    {field.charAt(0).toUpperCase() +
-                      field.slice(1).replace(/([A-Z])/g, " $1")}
-                  </td>
-                  <td className="field-value">{values[field]}</td>
-                </tr>
-              ))}
+              {Object.entries(formik.values)
+                .filter(([key]) => key !== "id") // ✅ Hide id field
+                .map(([key, val]) => (
+                  <tr key={key}>
+                    <td className="field-name">
+                      {fieldIcons[key]}{" "}
+                      {key.charAt(0).toUpperCase() +
+                        key
+                          .slice(1)
+                          .replace(/([A-Z])/g, " $1")}
+                    </td>
+                    <td className="field-value">{val}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
-          <div className="profile-actions">
-            <button onClick={() => setMode("edit")} className="edit-btn blue-btn">
-              Edit Profile
-            </button>
-          </div>
+          <button onClick={() => setMode("edit")} className="edit-btn blue-btn">
+            ✎ Edit Profile
+          </button>
         </div>
       </div>
     );
-  }
 
-  // ✅ Create/Edit Form
+  // ✅ CREATE / EDIT MODE
   return (
     <div className="profile-overlay">
       <div className="form-container">
-        <button
-          className="close-btn"
-          onClick={() => navigate("/admin/dashboard")}
-          title="Go to Dashboard"
-        >
+        <button className="close-btn" onClick={() => navigate("/admin/dashboard")}>
           ✖
         </button>
-
         <h2>{mode === "edit" ? "Edit Admin Profile" : "Create Admin Profile"}</h2>
+
         <form onSubmit={formik.handleSubmit} className="form-grid">
           {Object.keys(formik.initialValues).map((field) => (
             <div key={field} className="form-group">
               <label>
                 {fieldIcons[field]}{" "}
-                {field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, " $1")}
+                {field.charAt(0).toUpperCase() +
+                  field.slice(1).replace(/([A-Z])/g, " $1")}
               </label>
               <input
                 type={
@@ -259,6 +249,7 @@ export default function AdminProfileForm() {
               )}
             </div>
           ))}
+
           <div className="form-group full-width">
             <button type="submit" className="submit-btn">
               {mode === "edit" ? "Update Profile" : "Save Profile"}
