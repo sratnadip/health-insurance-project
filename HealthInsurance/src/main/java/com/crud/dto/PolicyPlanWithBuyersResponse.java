@@ -11,7 +11,7 @@ import java.util.List;
 public class PolicyPlanWithBuyersResponse {
 
     
-    private Long policyId;
+    private Long id;
     private String policyName;
     private String policyType;
     private Double coverage;

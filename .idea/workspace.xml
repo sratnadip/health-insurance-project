@@ -6,20 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="845bf92b-1c85-440b-bed8-5bacfa7b65cd" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/CrudOperationApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/CrudOperationApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/AdminPolicyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/AdminPolicyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/dto/PendingPolicyResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/dto/PendingPolicyResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/repository/UserPolicyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/repository/UserPolicyRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/service/UserPolicyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/service/UserPolicyService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/serviceimpl/UserPolicyImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/serviceimpl/UserPolicyImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/CrudOperationApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/CrudOperationApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminController$LoginRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminController$LoginRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminController$VerifyOtpRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminController$VerifyOtpRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/AdminController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/PendingPolicyResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/PendingPolicyResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/dto/PolicyPlanWithBuyersResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/src/main/java/com/crud/dto/PolicyPlanWithBuyersResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/PolicyPlanWithBuyersResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/HealthInsurance/target/classes/com/crud/dto/PolicyPlanWithBuyersResponse.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,16 +46,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.CrudOperationApplication.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;BackEnd&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/SAMIKSHA/Desktop/cloneproject&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.CrudOperationApplication.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "BackEnd",
+    "last_opened_file_path": "C:/Users/SAMIKSHA/Desktop/cloneproject",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="845bf92b-1c85-440b-bed8-5bacfa7b65cd" name="Changes" comment="" />
