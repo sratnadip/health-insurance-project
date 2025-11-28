@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: insurance-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: insurance_db
+      MYSQL_USER: insurance_user
+      MYSQL_PASSWORD: insurance123
+    ports:
+      - "0.0.0.0:3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - insurance-network
+
+  backend:
+    image: insurance-backend
+    container_name: insurance-backend
+    ports:
+      - "0.0.0.0:8080:8089"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/insurance_db
+      SPRING_DATASOURCE_USERNAME: insurance_user
+      SPRING_DATASOURCE_PASSWORD: insurance123
+    depends_on:
+      - mysql
+    networks:
+      - insurance-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_API_URL: http://50.19.136.16:8080
+    container_name: insurance-frontend
+    ports:
+      - "0.0.0.0:3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - insurance-network
+
+volumes:
+  mysql_data:
+
+networks:
+  insurance-network:
+    driver: bridge
